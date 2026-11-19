@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Services\Essense\EssenseClient;
+use App\Services\Essense\EssenseApi;
 use App\Services\Essense\Exceptions\EssenseMisconfigured;
 use App\Services\Essense\Exceptions\EssenseUnavailable;
 use Illuminate\Console\Command;
@@ -19,7 +19,7 @@ class EssensePing extends Command
      */
     protected $description = 'Check that the Essense API is reachable and ESSENSE_API_KEY is accepted';
 
-    public function handle(EssenseClient $client): int
+    public function handle(EssenseApi $client): int
     {
         $url = config('services.essense.url');
 
