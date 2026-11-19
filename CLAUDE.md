@@ -69,13 +69,27 @@ The developer is a senior frontend-focused full-stack engineer (React/TS, a11y, 
 | Types | `resources/js/types/` | Page prop types. |
 | Tests | `tests/Feature`, `tests/Unit` | **PHPUnit** (class-based). `tests/Pest.php` is a leftover; Pest is not installed. |
 
-**Architecture decisions still open** (record them here once decided):
+## Decisions
 
-- How a user is identified (anonymous cookie UUID vs. a simple auth layer).
-- Whether local data mirrors the API's game and vote data or is only a ledger of each user's daily actions, and which one is the source of truth.
-- How "local midnight" reaches the server (client sends a timezone or offset? how is it validated?).
-- Database for docker-compose (SQLite file vs. MySQL/Postgres service).
-- How local rows stay correct when API game IDs are reused after `/cache/flush`.
+1. **Identity:** real accounts, using the starter kit's auth trimmed to register, login and logout. No email verification,
+   password reset or settings pages. Office use; we assume good faith past "one account, one password".
+2. **Source of truth:** the API owns games and vote totals. The local DB stores only *who voted for which game*
+   (`votes`) and the daily-action log. Duplicate-title check = fetch `/games/list` and compare normalized titles,
+   with the add wrapped in a `Cache::lock` to prevent races.
+3. **Local midnight:** the user's IANA timezone is saved on the user record at registration (auto-detected in the browser,
+   checked with Laravel's `timezone` validation rule). The server works out `local_date` from it. A unique index on
+   (`user_id`, `local_date`) enforces one action per day at the database level.
+4. **Database:** SQLite, as a file in a Docker volume.
+5. **Flush / ID reuse:** local rows store the API game ID **and** the game name, and a row only counts if both still
+   match `/games/list`. There's also an artisan `games:reset` command that flushes the API and clears local tables together.
+6. **Rule semantics:**
+   - Undoing an action on the same day refunds it: removing your vote the same day you cast it gives back today's action.
+   - One active vote per user per game (unique index). No piling votes onto the same game across days.
+   - **Anyone can remove a game.** The confirmation dialog shows its vote count. Removal deletes the local vote rows and
+     refunds today's action to anyone who voted for it or added it *today*, all in one DB transaction.
+     Refunded users get a Laravel database notification ("*X* was removed, so today's vote was given back"), shown once
+     in an `aria-live` region. The daily-action status is always visible and comes from the server.
+     Not refunded: votes from earlier days, and removals made outside the app (the leftover rows are ignored, see 5).
 
 ## Commands
 
