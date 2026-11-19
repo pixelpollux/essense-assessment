@@ -41,6 +41,10 @@
     --color-border: var(--border);
     --color-input: var(--input);
     --color-ring: var(--ring);
+    --color-brand-tint: var(--brand-tint);
+    --color-brand-tint-foreground: var(--brand-tint-foreground);
+    --color-brand-line: var(--brand-line);
+    --color-secondary-ink: var(--secondary-ink);
 
     --color-chart-1: var(--chart-1);
     --color-chart-2: var(--chart-2);
@@ -83,10 +87,11 @@
     --card-foreground: hsl(0, 0%, 3.9%);
     --popover: hsl(0, 0%, 100%);
     --popover-foreground: hsl(0, 0%, 3.9%);
-    --primary: hsl(0, 0%, 9%);
-    --primary-foreground: hsl(0, 0%, 98%);
-    --secondary: hsl(0, 0%, 96.1%);
-    --secondary-foreground: hsl(0, 0%, 9%);
+    /* Brand: burgundy #420217 + lime #d0ff15. Light theme: burgundy leads, lime is a fill with burgundy on it. */
+    --primary: #420217; /* white on it: 16.8:1 */
+    --primary-foreground: #ffffff;
+    --secondary: #d0ff15; /* never as text or a line on light backgrounds (1.2:1) */
+    --secondary-foreground: #420217; /* 14.4:1 on lime */
     --muted: hsl(0, 0%, 96.1%);
     --muted-foreground: hsl(0, 0%, 45.1%);
     --accent: hsl(0, 0%, 96.1%);
@@ -95,7 +100,11 @@
     --destructive-foreground: hsl(0, 0%, 98%);
     --border: hsl(0, 0%, 92.8%);
     --input: hsl(0, 0%, 89.8%);
-    --ring: hsl(0, 0%, 3.9%);
+    --ring: #420217;
+    --brand-tint: #faffe8; /* "your vote" row fill; burgundy on it 16.4:1 */
+    --brand-tint-foreground: #420217;
+    --brand-line: #420217; /* non-text edges of "your vote", 16.8:1 on white */
+    --secondary-ink: #536608; /* lime shade for text/lines on light, 6.4:1 */
     --chart-1: hsl(12, 76%, 61%);
     --chart-2: hsl(173, 58%, 39%);
     --chart-3: hsl(197, 37%, 24%);
@@ -119,10 +128,11 @@
     --card-foreground: hsl(0, 0%, 98%);
     --popover: hsl(0, 0%, 3.9%);
     --popover-foreground: hsl(0, 0%, 98%);
-    --primary: hsl(0, 0%, 98%);
-    --primary-foreground: hsl(0, 0%, 9%);
-    --secondary: hsl(0, 0%, 14.9%);
-    --secondary-foreground: hsl(0, 0%, 98%);
+    /* Dark theme: roles swap. Lime leads, burgundy is a fill with lime on it. */
+    --primary: #d0ff15; /* burgundy on it: 14.4:1 */
+    --primary-foreground: #420217;
+    --secondary: #420217; /* never as text or a line on dark backgrounds (1.2:1) */
+    --secondary-foreground: #d0ff15; /* 14.5:1 on burgundy */
     --muted: hsl(0, 0%, 6.9%);
     --muted-foreground: hsl(0, 0%, 63.9%);
     --accent: hsl(0, 0%, 14.9%);
@@ -131,7 +141,11 @@
     --destructive-foreground: hsl(0, 0%, 98%);
     --border: hsl(0, 0%, 14.9%);
     --input: hsl(0, 0%, 14.9%);
-    --ring: hsl(0, 0%, 83.1%);
+    --ring: #d0ff15;
+    --brand-tint: #1e220b; /* lime on it 14.0:1 */
+    --brand-tint-foreground: #d0ff15;
+    --brand-line: #d0ff15; /* 17.0:1 on the dark background */
+    --secondary-ink: #cab8be; /* burgundy tint for text/lines on dark, 10.5:1 */
     --chart-1: hsl(220, 70%, 50%);
     --chart-2: hsl(160, 60%, 45%);
     --chart-3: hsl(30, 80%, 55%);
@@ -154,5 +168,16 @@
 
     body {
         @apply bg-background text-foreground;
+    }
+
+    /* Browser-drawn surfaces carry the brand too. */
+    ::selection {
+        background-color: var(--secondary);
+        color: var(--secondary-foreground);
+    }
+
+    input,
+    textarea {
+        caret-color: var(--brand-line);
     }
 }
