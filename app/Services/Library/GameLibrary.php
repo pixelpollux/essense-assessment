@@ -102,11 +102,13 @@ final class GameLibrary
     }
 
     /**
+     * @return Game The game voted for (its vote count is from before the vote).
+     *
      * @throws GameNotFound
      * @throws AlreadyVoted
      * @throws DailyLimitReached
      */
-    public function vote(User $user, int $gameId): void
+    public function vote(User $user, int $gameId): Game
     {
         $game = $this->api->findGame($gameId) ?? throw new GameNotFound($gameId);
 
@@ -134,13 +136,17 @@ final class GameLibrary
         });
 
         $this->callApiOrUndo(fn () => $this->api->vote($game->id), $undo);
+
+        return $game;
     }
 
     /**
+     * @return Game The game the vote was removed from.
+     *
      * @throws GameNotFound
      * @throws NotVoted
      */
-    public function removeVote(User $user, int $gameId): void
+    public function removeVote(User $user, int $gameId): Game
     {
         $game = $this->api->findGame($gameId) ?? throw new GameNotFound($gameId);
 
@@ -165,6 +171,8 @@ final class GameLibrary
             ->where('game_id', $game->id)
             ->where('game_name', $game->name)
             ->update(['refunded_at' => now(), 'refund_reason' => RefundReason::Withdrawn->value]);
+
+        return $game;
     }
 
     /**
@@ -173,7 +181,7 @@ final class GameLibrary
      *
      * @throws GameNotFound When it's already gone.
      */
-    public function removeGame(User $remover, int $gameId): void
+    public function removeGame(User $remover, int $gameId): Game
     {
         $game = $this->api->findGame($gameId) ?? throw new GameNotFound($gameId);
 
@@ -198,6 +206,8 @@ final class GameLibrary
                     'refund_reason' => $action->user_id === $remover->id ? RefundReason::Withdrawn : RefundReason::GameRemoved,
                 ]));
         });
+
+        return $game;
     }
 
     // --- Daily action ---------------------------------------------------------------------
