@@ -1,16 +1,19 @@
 <?php
 
+use App\Http\Controllers\GameController;
+use App\Http\Controllers\VoteController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('welcome');
-})->name('home');
+Route::middleware('auth')->group(function () {
+    Route::get('/', [GameController::class, 'index'])->name('games.index');
+    Route::post('games', [GameController::class, 'store'])->name('games.store');
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
-    })->name('dashboard');
+    // {game} is the Essense API's game ID.
+    Route::whereNumber('game')->group(function () {
+        Route::delete('games/{game}', [GameController::class, 'destroy'])->name('games.destroy');
+        Route::post('games/{game}/vote', [VoteController::class, 'store'])->name('votes.store');
+        Route::delete('games/{game}/vote', [VoteController::class, 'destroy'])->name('votes.destroy');
+    });
 });
 
 require __DIR__.'/auth.php';

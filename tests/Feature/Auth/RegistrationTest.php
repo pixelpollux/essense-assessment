@@ -27,7 +27,7 @@ class RegistrationTest extends TestCase
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(route('dashboard', absolute: false));
+        $response->assertRedirect(route('games.index', absolute: false));
         $this->assertDatabaseHas('users', [
             'email' => 'test@example.com',
             'timezone' => 'Australia/Sydney',
