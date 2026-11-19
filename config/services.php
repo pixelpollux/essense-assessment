@@ -28,6 +28,12 @@ return [
         'key' => env('RESEND_KEY'),
     ],
 
+    'essense' => [
+        'url' => env('ESSENSE_API_URL', 'https://codechallenge.essensedesigns.info'),
+        'key' => env('ESSENSE_API_KEY'),
+        'timeout' => (int) env('ESSENSE_API_TIMEOUT', 5),
+    ],
+
     'slack' => [
         'notifications' => [
             'bot_user_oauth_token' => env('SLACK_BOT_USER_OAUTH_TOKEN'),
