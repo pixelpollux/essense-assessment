@@ -131,6 +131,11 @@ final class FakeEssenseApi implements EssenseApi
         });
     }
 
+    public function flushGames(): void
+    {
+        $this->run(__FUNCTION__, fn () => $this->flush());
+    }
+
     // --- Internals ------------------------------------------------------------------------
 
     private function existing(int $id): void

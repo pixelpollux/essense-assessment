@@ -51,4 +51,9 @@ interface EssenseApi
      * @throws GameNotFound
      */
     public function removeGame(int $id): void;
+
+    /**
+     * Delete every game. The API then restarts game IDs at 1 (docs/api-notes.md, finding 10).
+     */
+    public function flushGames(): void;
 }
