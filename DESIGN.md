@@ -1,297 +1,290 @@
 ---
 name: Office Game Library
-description: A daily, deliberately scarce vote on the office game library; where you stand today sits beside the ranking.
+description: A daily, deliberately scarce vote on the office game library, carried by one physical token you place once a day.
 colors:
-  burgundy: "#420217"
-  lime: "#d0ff15"
-  lime-ink: "#536608"
-  burgundy-ink: "#cab8be"
-  vote-tint-light: "#faffe8"
-  vote-tint-dark: "#1e220b"
-  white: "#ffffff"
-  ground-light: "hsl(0, 0%, 100%)"
-  ink-light: "hsl(0, 0%, 3.9%)"
-  muted-light: "hsl(0, 0%, 96.1%)"
-  muted-ink-light: "hsl(0, 0%, 45.1%)"
-  border-light: "hsl(0, 0%, 92.8%)"
-  input-light: "hsl(0, 0%, 89.8%)"
-  ground-dark: "hsl(0, 0%, 3.9%)"
-  ink-dark: "hsl(0, 0%, 98%)"
-  muted-dark: "hsl(0, 0%, 6.9%)"
-  muted-ink-dark: "hsl(0, 0%, 63.9%)"
-  border-dark: "hsl(0, 0%, 14.9%)"
-  destructive-light: "#b91c1c"
-  destructive-dark: "#f87171"
-  destructive-dark-ink: "#450a0a"
+  claret: "#420217"
+  volt: "#d0ff15"
+  volt-ink: "#536608"
+  claret-ink: "#cab8be"
+  paper: "#ffffff"
+  ink: "#1d1418"
+  mist: "#f6f1f2"
+  smoke: "#6e5d63"
+  hairline: "#ece4e6"
+  edge: "#8f7d83"
+  night: "#1a0b11"
+  night-surface: "#221018"
+  night-hover: "#2e1820"
+  night-ink: "#f6eef1"
+  night-smoke: "#b8a5ac"
+  night-hairline: "#35212a"
+  night-edge: "#7a6168"
+  destructive: "#b91c1c"
+  destructive-night: "#f87171"
+  destructive-night-ink: "#450a0a"
 typography:
+  status:
+    fontFamily: "Schibsted Grotesk, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "1.75rem"
+    fontWeight: 600
+    lineHeight: 1.2
+    letterSpacing: "-0.025em"
   headline:
-    fontFamily: "Instrument Sans, ui-sans-serif, system-ui, sans-serif"
+    fontFamily: "Schibsted Grotesk, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "1.25rem"
+    fontWeight: 700
+    lineHeight: "1.75rem"
+    letterSpacing: "-0.025em"
+  rank:
+    fontFamily: "Schibsted Grotesk, ui-sans-serif, system-ui, sans-serif"
     fontSize: "1.5rem"
     fontWeight: 600
     lineHeight: "2rem"
-    letterSpacing: "-0.025em"
-  title:
-    fontFamily: "Instrument Sans, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "1rem"
-    fontWeight: 600
-    lineHeight: "1.5rem"
-  rank:
-    fontFamily: "Instrument Sans, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "1.125rem"
-    fontWeight: 600
-    lineHeight: "1.75rem"
     fontFeature: "tnum"
-  body:
-    fontFamily: "Instrument Sans, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "1rem"
+  title:
+    fontFamily: "Schibsted Grotesk, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "1.0625rem"
     fontWeight: 500
+    lineHeight: 1.4
+  body:
+    fontFamily: "Schibsted Grotesk, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "1rem"
+    fontWeight: 400
     lineHeight: "1.5rem"
   body-sm:
-    fontFamily: "Instrument Sans, ui-sans-serif, system-ui, sans-serif"
+    fontFamily: "Schibsted Grotesk, ui-sans-serif, system-ui, sans-serif"
     fontSize: "0.875rem"
     fontWeight: 400
     lineHeight: "1.25rem"
   label:
-    fontFamily: "Instrument Sans, ui-sans-serif, system-ui, sans-serif"
+    fontFamily: "Schibsted Grotesk, ui-sans-serif, system-ui, sans-serif"
     fontSize: "0.75rem"
-    fontWeight: 600
+    fontWeight: 400
     lineHeight: "1rem"
+    fontFeature: "tnum"
 rounded:
-  sm: "4px"
   md: "6px"
   lg: "8px"
-  xl: "12px"
-  sheet: "16px"
   full: "9999px"
 spacing:
-  row-gap: "4px"
-  control-gap: "8px"
-  gutter: "16px"
-  gutter-sm: "24px"
-  panel: "20px"
-  zone-stack: "32px"
-  zone-gap: "48px"
+  xs: "8px"
+  sm: "12px"
+  md: "16px"
+  lg: "24px"
+  xl: "56px"
 components:
   button-primary:
-    backgroundColor: "{colors.burgundy}"
-    textColor: "{colors.white}"
+    backgroundColor: "{colors.claret}"
+    textColor: "{colors.paper}"
     rounded: "{rounded.md}"
-    padding: "8px 16px"
+    padding: "8px 20px"
     height: "44px"
-  button-primary-dark:
-    backgroundColor: "{colors.lime}"
-    textColor: "{colors.burgundy}"
+  button-primary-night:
+    backgroundColor: "{colors.volt}"
+    textColor: "{colors.claret}"
     rounded: "{rounded.md}"
-    padding: "8px 16px"
+    padding: "8px 20px"
     height: "44px"
   button-vote:
     backgroundColor: "transparent"
-    textColor: "{colors.ink-light}"
+    textColor: "{colors.ink}"
     rounded: "{rounded.md}"
     padding: "8px 16px"
     height: "40px"
     width: "80px"
   button-vote-hover:
-    backgroundColor: "{colors.burgundy}"
-    textColor: "{colors.white}"
+    backgroundColor: "{colors.claret}"
+    textColor: "{colors.paper}"
   button-destructive:
-    backgroundColor: "{colors.destructive-light}"
-    textColor: "{colors.white}"
+    backgroundColor: "{colors.destructive}"
+    textColor: "{colors.paper}"
     rounded: "{rounded.md}"
     padding: "8px 16px"
     height: "40px"
-  button-destructive-dark:
-    backgroundColor: "{colors.destructive-dark}"
-    textColor: "{colors.destructive-dark-ink}"
   input-field:
-    backgroundColor: "{colors.ground-light}"
-    textColor: "{colors.ink-light}"
+    backgroundColor: "{colors.paper}"
+    textColor: "{colors.ink}"
     rounded: "{rounded.md}"
     padding: "8px 12px"
     height: "44px"
-  today-panel-available:
-    backgroundColor: "{colors.lime}"
-    textColor: "{colors.burgundy}"
-    rounded: "{rounded.xl}"
-    padding: "{spacing.panel}"
-  today-panel-available-dark:
-    backgroundColor: "{colors.burgundy}"
-    textColor: "{colors.lime}"
-  today-panel-used:
-    backgroundColor: "{colors.muted-light}"
-    textColor: "{colors.ink-light}"
-    rounded: "{rounded.xl}"
-    padding: "{spacing.panel}"
-  game-row:
-    backgroundColor: "transparent"
-    rounded: "{rounded.lg}"
-    padding: "12px"
-  game-row-mine:
-    backgroundColor: "{colors.vote-tint-light}"
-    textColor: "{colors.burgundy}"
-    rounded: "{rounded.lg}"
-    padding: "12px"
-  game-row-mine-dark:
-    backgroundColor: "{colors.vote-tint-dark}"
-    textColor: "{colors.lime}"
-  badge-your-vote:
-    backgroundColor: "{colors.lime}"
-    textColor: "{colors.burgundy}"
+  action-token:
+    backgroundColor: "{colors.volt}"
+    textColor: "{colors.claret}"
+    typography: "{typography.headline}"
+    rounded: "{rounded.full}"
+    size: "48px"
+  action-token-sm:
+    backgroundColor: "{colors.volt}"
+    textColor: "{colors.claret}"
     typography: "{typography.label}"
     rounded: "{rounded.full}"
-    padding: "2px 10px"
-  badge-your-vote-dark:
-    backgroundColor: "{colors.burgundy}"
-    textColor: "{colors.lime}"
+    size: "24px"
+  status-bar:
+    backgroundColor: "{colors.paper}"
+    textColor: "{colors.ink}"
+    padding: "10px 16px"
+  flash-message:
+    backgroundColor: "{colors.paper}"
+    textColor: "{colors.ink}"
+    typography: "{typography.body-sm}"
+    rounded: "{rounded.lg}"
+    padding: "4px 4px 4px 16px"
 ---
 
 # Design System: Office Game Library
 
 ## Overview
 
-**Creative North Star: "The Daily Ballot Box"**
+**Creative North Star: "The Daily Token"**
 
-One considered action a day, and the page never lets you lose track of it. The system is shadcn/ui on a strictly neutral ground (pure white, near-black), with two pinned brand colors doing all the talking: a deep burgundy and an electric lime. They are not decoration. Lime as a fill means "you can act today"; a tinted, ringed row means "this one is yours". When the day's action is spent, the color drains out of the status panel and it goes grey, which is the whole state change made visible.
+Today's action is a physical game token: a Volt disc with a claret "1" on it. It is the only bold object on the page. While the action is available it sits beside the status sentence; once used, the status keeps only its dashed empty spot; a vote places it on the row it went to, with the words "Your vote" beside it. When you vote, the token travels from the status to that row. Everything else is quiet: one left-aligned column of type and hairlines, with no cards, no tinted rows, no badges and no dashboard panels.
 
-The density is a working list, not a showcase: rows are compact (12px padding, 4px apart), numbers are tabular, counts align in a fixed right-hand column. The status sits beside the ranking on desktop (a sticky 21rem column) and as a solid sticky strip above it on phones. Everything is flat at rest; the only shadows belong to things that genuinely float over content.
+The page is type-led. Where you stand today is a 28px sentence ("You have today's action.", "Your action today went to "Catan"."), not a filled panel, and the suggest field sits inline under it. The ranking below is a plain hairline-divided list with large tabular rank numerals. The density is that of a working list: one row per game, counts in a fixed right-hand column, actions that disappear rather than disable once today's action is used.
 
-The two brand colors swap roles by theme, because each is about 1.2:1 against a background of similar lightness. In light, burgundy leads (primary fills, focus ring, your-vote edge) and lime is a fill carrying burgundy text. In dark, lime leads and burgundy becomes the fill carrying lime text.
+The neutrals carry the brand quietly. Light theme is Paper with claret-tinted greys; dark theme is a claret Night, never neutral black. Claret (#420217) and Volt (#D0FF15) are kept exact and swap leading roles by theme, because each is about 1.2:1 against a ground of similar lightness. Accessibility to WCAG 2.2 AA is a hard floor, and contrast ratios are recorded as comments beside each token in `resources/css/app.css`.
 
 **Key Characteristics:**
-- Neutral achromatic ground; color is reserved for state (available, mine, destructive).
-- Burgundy and lime swap leading roles between light and dark themes.
-- Flat surfaces; tonal fills and 1px rings instead of shadows.
-- Instrument Sans throughout, three weights (400, 500, 600), tabular numerals for every count and rank.
-- Actions disappear rather than disable once today's action is used.
-- WCAG 2.2 AA is a hard floor; contrast ratios live as comments beside the tokens in `resources/css/app.css`.
+- One bold object, the Volt action token, in three states (available, spent, placed).
+- A single left-aligned 42rem column on every screen size, header aligned to it.
+- Status as a 28px sentence, not a panel; suggest field inline beneath it.
+- Hairline-divided ranking rows; no cards, tints or badges.
+- Claret-tinted neutrals in both themes; dark ground is claret Night.
+- Schibsted Grotesk throughout, tabular numerals for every rank, count and countdown.
+- One orchestrated motion (the token flight) plus a rank-reorder slide, both skipped under reduced motion.
 
 ## Colors
 
-A neutral grey ground carrying two loud, user-pinned brand colors that trade places between themes.
+Two exact brand colors over claret-tinted neutrals; the brand colors swap roles by theme and are reached through semantic roles, never raw hex.
 
 ### Primary
-- **Ballot Burgundy** (`burgundy`): Light theme's leading color: primary button fill (white text, 16.8:1), focus ring, the 1px edge of your-vote rows, input caret, and the text on any lime fill (14.4:1). In dark theme it becomes the fill: Today panel while an action is available, the "Your vote" badge, text selection, all carrying lime text.
+- **Claret** (#420217): light theme primary fill (the Suggest button, Vote hover fill), focus ring, `brand-line` (token edge, the underline on the voted game's name in the status, caret), and `brand-ink` (the wordmark and the rank-1 numeral). In dark theme it becomes the secondary fill and the text on Volt.
 
 ### Secondary
-- **Signal Lime** (`lime`): Light theme's fill: the Today panel while an action is available, the "Your vote" badge, text selection, the avatar initials disc, always with burgundy text. In dark theme it leads: primary button fill, focus ring, your-vote row edge, caret.
-- **Lime Ink** (`lime-ink`): The lime shade for when lime would need to be text or an icon on a light background (6.4:1 on white). Used on the success icon of a flash message.
-- **Burgundy Ink** (`burgundy-ink`): The dark-theme counterpart: a burgundy tint for text or icons on the dark ground (10.5:1).
-- **Vote Tint** (`vote-tint-light` / `vote-tint-dark`): The faint fill of your-vote rows. Light: a whisper of lime under burgundy text (16.4:1). Dark: a deep olive under lime text (14.0:1).
+- **Volt** (#d0ff15): the token fill in both themes (`token`, a constant). In dark theme it is also primary (the Suggest button), focus ring, `brand-line` and `brand-ink`. In light theme it appears only as the token, the selection highlight and the avatar fill, always carrying claret on it.
+- **Volt Ink** (#536608): Volt's text-safe shade on light (`secondary-ink`, 6.4:1), used for the success icon in messages.
+- **Claret Ink** (#cab8be): the dark-theme `secondary-ink` (10.5:1 on Night).
+
+### Tertiary
+- **Destructive** (#b91c1c, 6.5:1 on Paper) and **Destructive Night** (#f87171 on Night, with **Destructive Night Ink** #450a0a on it): error messages, the "Remove game..." menu item and the dialog's confirm button only.
 
 ### Neutral
-- **Paper / Night** (`ground-light`, `ground-dark`): Page and card background.
-- **Ink** (`ink-light`, `ink-dark`): Body text and game names.
-- **Muted Fill** (`muted-light`, `muted-dark`): The Today panel once the action is used (with a 1px border so it holds its edge in dark).
-- **Muted Ink** (`muted-ink-light`, `muted-ink-dark`): Secondary copy, counts in headers, ranks below first place, placeholders.
-- **Hairline** (`border-light`, `border-dark`; inputs use `input-light`): All borders and dividers, 1px.
-- **Destructive** (`destructive-light` with white text; `destructive-dark` with `destructive-dark-ink` text): Remove game confirm button, the Remove game menu item, error flash text and icons. Darkened from the shadcn default for AA (6.5:1 light, 7.2:1 dark as text).
+- **Paper** (#ffffff) / **Night** (#1a0b11): page grounds.
+- **Ink** (#1d1418, 18:1) / **Night Ink** (#f6eef1): body text.
+- **Smoke** (#6e5d63, 6.2:1) / **Night Smoke** (#b8a5ac, 8.2:1): secondary text, ranks 2 onward, counts, helper lines.
+- **Mist** (#f6f1f2) / **Night Hover** (#2e1820): hover surfaces for ghost and outline controls.
+- **Night Surface** (#221018): dark card and popover surface (messages, menus, dialog); light uses Paper.
+- **Hairline** (#ece4e6) / **Night Hairline** (#35212a): decorative dividers between rows, header and status-bar rules, empty-state bounds.
+- **Edge** (#8f7d83, 3.9:1) / **Night Edge** (#7a6168, 3.4:1): control outlines and the dashed spent token; passes WCAG 1.4.11 at 3:1.
 
 ### Named Rules
-**The Same-Lightness Rule.** Neither brand color is ever text or a line on a background of similar lightness: no lime on light, no burgundy on dark. When a lime- or burgundy-colored glyph is needed there, use `lime-ink` or `burgundy-ink`.
+**The Same-Lightness Rule.** Neither brand color is ever text or a line on a ground of similar lightness: no Volt on Paper, no claret on Night. Use `brand-line`, `brand-ink` or `secondary-ink`, which resolve to the safe color per theme.
 
-**The Role Swap Rule.** Write against the semantic roles (`primary`, `secondary`, `brand-line`, `brand-tint`), never the raw hex. The theme decides which brand color plays which role.
+**The Role Swap Rule.** Write against semantic roles (`primary`, `secondary`, `token`, `brand-line`, `brand-ink`, `secondary-ink`), never raw hex. The theme decides which brand color plays which role; only `token` is constant.
 
-**The Lime Means Go Rule.** A lime (light) or burgundy (dark) fill on the Today panel means an action is available. When it is used, the panel goes to the muted neutral. Don't fill other large surfaces with the secondary color.
+**The One Bold Object Rule.** Volt as a fill belongs to the token (and, in dark theme, the primary button). No other surface, row or panel is filled or tinted with a brand color.
+
+**The Edge Rule.** A line that identifies a control uses Edge (3:1 or better); Hairline is for decorative division only.
 
 ## Typography
 
-**Display Font:** none (no display tier)
-**Body Font:** Instrument Sans (with ui-sans-serif, system-ui, sans-serif), loaded from fonts.bunny.net at 400, 500, 600
-**Label/Mono Font:** Instrument Sans; numerals switch to tabular figures
+**Display Font:** Schibsted Grotesk (with ui-sans-serif, system-ui, sans-serif)
+**Body Font:** Schibsted Grotesk
 
-**Character:** One grotesque in three weights; hierarchy comes from size and weight steps, not from a second family. Plain and legible, so the brand colors carry the personality.
+**Character:** One newsy grotesk, loaded from Bunny Fonts at 400, 500 and 700, doing everything by size and weight. The status sentence is the headline; there is no hero type beyond it.
 
 ### Hierarchy
-- **Headline** (600, 1.5rem, tight -0.025em): Zone headings: "Ranking" and the Today panel headline on desktop. Balanced wrapping.
-- **Title** (600, 1rem): Sub-headings ("Suggest a game"), the compact Today headline on phones, the wordmark in the header.
-- **Rank** (600, 1.125rem, tabular): The rank numeral at the start of every row; first place in full ink, the rest muted.
-- **Body** (500, 1rem): Game names (break long words, never truncate) and empty-state messages.
-- **Body small** (400 or 500, 0.875rem): Status detail, helper copy, vote counts, flash messages, character counter.
-- **Label** (600, 0.75rem): Badges and the compact reset countdown.
+- **Status** (600, 1.75rem/1.2, -0.025em, balanced): the daily status sentence; the page's type-led headline.
+- **Headline** (700, 1.25rem, -0.025em): section headings ("Ranking"). The token's "1" also uses this size at 700.
+- **Rank** (600, 1.5rem, tabular): row rank numeral; rank 1 in `brand-ink`, the rest in Smoke.
+- **Title** (500, 1.0625rem/1.4): game names in the ranking; empty-state headings at 600.
+- **Body** (400, 1rem): status detail line and empty-state copy, Smoke.
+- **Body small** (400 or 500, 0.875rem): reset countdown, counts, labels, messages, button text, the compact status sentence (600).
+- **Label** (400, 0.75rem, tabular): compact bar countdown and the small token numeral.
 
 ### Named Rules
-**The Tabular Rule.** Every rank, vote count, game count and character counter uses tabular numerals so columns of numbers align.
+**The Tabular Rule.** Every rank, vote count, game count, character counter and countdown uses tabular numerals.
 
-**The Weight Ceiling Rule.** Weights stop at 600. Emphasis is 500 (game names, the near-limit counter), structure is 600.
+**The Sentence Status Rule.** Where you stand today is written as a sentence at Status size, not a label-plus-value panel.
 
 ## Layout
 
-A centered container (max 72rem) with a 16px gutter, 24px from 640px up. Under 1024px the page is a single column; from 1024px it becomes two zones: a 21rem sticky status column (top 24px) and the ranking (`minmax(0, 1fr)`), 48px apart. Inside the status column, the Today panel and the suggest form stack 32px apart.
+A single left-aligned column, max 42rem (`max-w-2xl`), centered in the viewport on every screen size, with 16px gutters (24px from 640px). The header (56px tall, hairline below) aligns its wordmark and controls to the same column. The status opens the page (40px top, 56px from 640px), token on the left with a 16px gap (24px from 640px), then the sentence, detail, countdown and, while an action is available, the suggest form 24px below. The ranking starts 56px under the status.
 
-On phones the Today panel collapses to a compact strip (status left, a Suggest button right) inside a solid, full-bleed sticky band at the top of the viewport; the suggest form moves into a bottom sheet. Because that band overlays content, `html` gets `scroll-padding-top: 7.5rem` below 1024px so focused and scrolled-to elements clear it (WCAG 2.4.11). Flash messages render inside the sticky region on both layouts, so they are visible wherever the user has scrolled and the ranking never shifts.
+Ranking rows are a grid: rank | name | action | count | menu, 16px vertical padding, divided by hairlines. From 640px the columns are 3rem, flexible, auto, 5.5rem, 2.5rem with 12px gaps, so counts align whichever button a row shows; below 640px the count moves under the name and the gap tightens to 8px. A filter field appears once the library holds 9 or more games.
 
-Each ranking row is a grid: rank | name | action | count | menu. From 640px the columns are 2.5rem, flexible, auto, 6rem, 2.5rem with 12px gaps, so the count and menu sit at a fixed right edge and counts align whichever button a row shows. Below 640px the count moves under the name and the grid drops to four columns (2.25rem rank, 8px gaps). Rows sit 4px apart.
-
-Interactive targets: 40px for row controls and icon buttons, 44px for the suggest input, filter and primary submit. The filter field appears only once the list reaches 9 games.
+Once the status scrolls out of view (IntersectionObserver), a compact status bar fixes to the top on all viewports; `scroll-padding-top: 4.5rem` keeps focused and scrolled-to elements clear of it. Messages fix to the bottom of the screen in the same 42rem column; the page has 128px of bottom padding so the last row clears them.
 
 ## Elevation & Depth
 
-Flat by default. Depth comes from tonal fills (lime or muted panel, vote tint) and 1px rings, not shadow. A soft small shadow appears only on elements that float over scrolling content in the mobile sticky band and on flash messages; shadcn's own overlays (dialog, sheet, dropdown) keep their stock larger shadows.
+Flat. Depth is conveyed by hairlines and position, not shadow. The compact status bar is fixed but separated only by a Paper/Night fill and a bottom hairline. Shadows belong to things that float over content: the bottom-pinned messages (`shadow-lg`) and the stock shadcn menus and dialog.
 
 ### Shadow Vocabulary
-- **Sticky lift** (`box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)`): The compact Today strip on phones and flash messages.
-- **Overlay** (shadcn stock `shadow-md` / `shadow-lg`): Dropdown menus, the remove dialog, the bottom sheet.
+- **Float** (`box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)`): bottom-pinned messages.
+- **Overlay** (shadcn stock `shadow-md` / `shadow-lg`): dropdown menus and the remove-game dialog.
 
 ### Named Rules
-**The Floats-Only Rule.** A shadow means "this sits above scrolling content". Rows, panels in the flow and empty states never get one.
+**The Floats-Only Rule.** A shadow means "this sits above scrolling content". Rows, the status, empty states and the status bar never get one.
 
 ## Shapes
 
-Gently rounded, from a 0.5rem base radius: 6px on buttons and inputs, 8px on list rows and flash messages, 12px on the Today panel and empty/error containers, 16px on the top corners of the mobile bottom sheet, fully round for badges and the avatar. Borders are 1px hairlines in the neutral border color; empty states use a dashed hairline. Your-vote rows use an inset 1px ring in the brand line color rather than a border, so they don't shift the grid.
+Gently rounded controls (6px) for buttons, inputs and rows (the row radius only shows in its arrival outline); 8px for messages and the dialog; full circles for the token and the avatar. Everything else is unbounded: sections are separated by space, rows and empty states by top and bottom hairlines. The token's edge is a 2px border: `brand-line` when filled, a 2px dashed Edge ring when spent.
 
 ## Components
 
 ### Buttons
-Restrained shadcn buttons; filled brand color is rare and therefore meaningful.
-- **Shape:** gently rounded (6px), 14px medium label, icon 16px with 8px gap.
-- **Primary:** filled with the theme's primary (burgundy light, lime dark). Reserved for the suggest submit (full width, 44px) and the mobile Suggest button (40px). Hover drops to 90% opacity.
-- **Vote:** outline on a transparent background, 40px tall, at least 80px wide. On hover it fills with the primary color. "Remove vote" is the same outline without the fill-on-hover.
-- **Ghost icon:** 40px square (36px for flash dismiss) for the row menu, header controls and dismiss.
-- **Destructive:** filled destructive, used only for the final "Remove game" confirmation, beside an outline "Keep game".
-- **Focus:** 2px ring in the theme's ring color (burgundy light, lime dark) with a 2px offset.
-- **Pending:** a spinning loader icon precedes the label, the button disables and sets `aria-busy`.
-
-### Badges
-- **"Your vote":** secondary fill (lime with burgundy text in light, burgundy with lime text in dark), fully round, 12px semibold, preceded by a 12px check icon. It is the non-color signal that a row is yours.
-
-### Cards / Containers
-- **Today panel:** 12px corners, 20px padding (16px by 12px compact). Secondary fill while an action is available, muted fill with a 1px border once used. Headline and detail are one polite live region; the reset countdown sits outside it so the minute tick is never announced. Secondary lines inside it are set at reduced opacity of the panel's ink.
-- **Empty / error states:** 12px corners, 1px border (dashed for empty), centered, generous padding (40px or 32px vertical).
+Restrained shadcn buttons; only one filled button is ever on screen at rest.
+- **Shape:** gently rounded (6px), 14px medium text.
+- **Primary:** theme `primary` fill (claret on light, Volt on dark) for the Suggest submit only, 44px tall, 20px horizontal padding; hover at 90% opacity.
+- **Vote (outline):** transparent with an Edge outline, 40px tall, min 80px wide; hover fills with `primary`. Hidden entirely once today's action is used. "Remove vote" uses the same outline without the fill hover.
+- **Ghost / icon:** 40px row menu trigger and 36px message dismiss; Mist / Night Hover on hover.
+- **Destructive:** dialog confirm only.
+- **Link:** the "Suggest "X"" action in an empty filter result.
+- **Focus:** 2px `ring` with 2px offset on every control.
 
 ### Inputs / Fields
-- **Style:** 1px input-color border, ground background, 6px corners, 44px tall in the product surface. The filter carries a 16px search icon inset 12px left.
-- **Focus:** the same 2px ring with 2px offset as buttons; the caret is the brand line color.
-- **Error:** message below the field, linked with `aria-describedby`; the character counter (`n/100`) turns full ink and medium weight within 10 characters of the limit.
+- **Style:** Edge 1px outline, Paper/Night background, 6px radius, 44px tall; caret in `brand-line`.
+- **Suggest field:** small medium label above; input and "Suggest" button on one row with 8px gap; a tabular "0/100" counter right-aligned beneath, turning Ink and medium in the last 10 characters; error text to its left.
+- **Filter:** search input with a 16px leading icon, 44px tall.
 
 ### Navigation
-- **Header:** 56px bar with a bottom hairline; wordmark "Office Game Library" as a 16px semibold link; on the right, the theme toggle and a 32px avatar (lime initials disc) inside a 40px ghost button.
+- **Header:** wordmark "Office Game Library" in `brand-ink`, 16px semibold, tight tracking; appearance toggle and a 32px avatar (secondary fill) as ghost icon buttons on the right.
 
-### Ranking Row (signature)
-The core of the product. A grid row (see Layout) with rank, name, action, count, menu. Your-vote rows take the vote tint, brand-tint text and an inset 1px brand-line ring, plus the "Your vote" badge, so ownership never relies on color alone. When the action is used, rows with no vote of yours show no action button at all. The row menu (ellipsis) holds "Remove game…" in destructive text, which opens a confirmation dialog stating the vote count at stake.
+### Action Token (signature)
+A 48px circle (24px small), Volt fill, claret "1" in bold tabular numerals, 2px `brand-line` edge. Decorative (`aria-hidden`): the sentence or "Your vote" label beside it says the same in words. States: **available** beside the status and in the compact bar; **spent**, a dashed Edge ring with no numeral; **placed**, 24px beside "Your vote" on the voted row.
 
-**Motion:** when the order changes, moved rows slide from their old position (FLIP, 420ms, `cubic-bezier(0.16, 1, 0.3, 1)`), skipped under reduced motion. After a vote change or "jump to my vote", focus lands on the row's new button and a static 2px ring-colored outline (2px offset) shows for 1.6s as an arrival cue; if that button no longer exists, focus goes to the Today heading.
+**Token flight.** On a vote, the placed token animates from the visible available token's position and scale to its place on the row (480ms, `cubic-bezier(0.16, 1, 0.3, 1)`). Skipped under `prefers-reduced-motion`.
 
-### Flash Message
-A 8px-rounded, 1px-bordered strip on the ground color with a small shadow, 14px medium text, a 16px status icon (destructive for errors; lime-ink / burgundy-ink check for success) and a 36px dismiss button. Errors use a 40%-opacity destructive border and destructive text. Both live regions (alert and status) are always mounted; messages never auto-clear; dismissing moves focus to the Today heading.
+### Ranking Row
+Hairline-divided list item, no fill. Rank numeral at Rank size; game name at Title; "Your vote" with the small placed token beneath the name; outline action; right-aligned tabular count; ghost menu with "Remove game...". When the ranking reorders, moved rows slide to their new position (420ms, same easing; skipped under reduced motion). After a vote change or a jump to your vote, focus lands on the row's button and a static 2px `ring` outline (4px offset) shows for 1.6s. Ties share a rank (competition ranking: 1, 2, 2, 4).
+
+### Status and Status Bar
+The full status is a section: token, Status sentence (live region with its detail line), and a non-live countdown ("Resets at midnight (Sydney time), in 5 h 12 min"). The voted game's name in the sentence is a button with a 2px `brand-line` underline (4px offset) that jumps to its row. The compact bar repeats the small token, the sentence at 14px semibold and a 12px tabular countdown; it is not a live region and is unmounted while hidden.
+
+### Messages
+Bottom-pinned, 8px radius, card fill, hairline border (error: destructive border at 50% and destructive text), leading 16px icon (success in `secondary-ink`), 36px dismiss. Never auto-clear; dismissing returns focus to the status heading. Both the alert and status live regions are always mounted; only their content changes.
+
+### Empty States
+A hairline-bounded block (top and bottom rule, 32 to 40px vertical padding) with a Title-size heading and a Smoke explanation; never a card or illustration.
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** put the brand colors through the semantic roles (`primary`, `secondary`, `brand-tint`, `brand-line`, `secondary-ink`) so they swap correctly between themes.
-- **Do** keep vote buttons outline (40px, min 80px wide) and reserve filled primary for the Today panel's submit and the mobile Suggest button.
-- **Do** hide actions that today's limit makes unavailable, and replace a used-up form with one sentence saying when it opens again.
-- **Do** mark ownership with tint, an inset 1px brand-line ring and a "Your vote" badge together.
-- **Do** use tabular numerals and a fixed right-hand count column so counts align across rows.
-- **Do** use competition ranking (1, 2, 2, 4) for tied vote counts.
-- **Do** keep status and action messages inside the sticky region, dismissible, never auto-clearing.
-- **Do** honor `prefers-reduced-motion` for any movement; static cues (the 1.6s arrival outline) need no variant.
-- **Do** record the contrast ratio beside any new color token, and hold every pairing to WCAG 2.2 AA.
+- **Do** route brand colors through `primary`, `secondary`, `token`, `brand-line`, `brand-ink` and `secondary-ink` so they swap correctly between themes.
+- **Do** keep the token as the only bold object: Volt fill, claret "1", 2px `brand-line` edge, in available, spent and placed states.
+- **Do** write today's status as a sentence at Status size (1.75rem) beside the token.
+- **Do** keep everything in one left-aligned 42rem column, header included, on every screen size.
+- **Do** divide rows and bound empty states with hairlines, and outline controls with Edge (3:1 or better).
+- **Do** keep vote buttons outline (40px, min 80px wide) and hide them once today's action is used.
+- **Do** use tabular numerals and a fixed right-hand count column; use competition ranking (1, 2, 2, 4) for ties.
+- **Do** pin messages to the bottom of the screen, dismissible, never auto-clearing, with both live regions always mounted.
+- **Do** skip the token flight and rank slide under `prefers-reduced-motion`; static cues such as the 1.6s arrival outline need no variant.
+- **Do** record a contrast ratio beside any new color token and hold every pairing to WCAG 2.2 AA.
 
 ### Don't:
-- **Don't** use lime as text or a line on a light background, or burgundy on a dark one (about 1.2:1).
+- **Don't** use Volt as text or a line on Paper, or claret on Night (about 1.2:1).
+- **Don't** fill or tint rows, panels or the status with a brand color; no cards, badges or dashboard panels.
+- **Don't** use a neutral black or grey ground in dark theme; the ground is claret Night.
 - **Don't** show rows of disabled Vote buttons once today's action is used.
-- **Don't** stack the status and suggest form above the list as the page's first block on desktop; status sits beside the ranking.
-- **Don't** add shadows to rows or in-flow panels; shadow is for elements floating over content.
-- **Don't** use the shadcn default destructive red; use the darkened destructive tokens.
-- **Don't** add a second typeface or weights above 600.
-- **Don't** announce the countdown; only the status headline and detail are live.
+- **Don't** add shadows to rows, the status, the status bar or empty states.
+- **Don't** add a second typeface.
+- **Don't** announce the countdown; only the status sentence and its detail are live.
