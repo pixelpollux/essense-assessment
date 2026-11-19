@@ -33,9 +33,18 @@ The first run builds the image, which takes a few minutes. After that, `docker-c
 | Run in the background | `docker-compose up -d` |
 | Follow the app logs | `docker-compose logs -f` |
 | Stop | `docker-compose down` |
-| Stop and **delete all data** (database, key) | `docker-compose down -v` |
+| Delete every game and vote, keeping accounts | `docker-compose exec app php artisan games:reset --force` |
+| Stop and delete local data (accounts, votes, app key) | `docker-compose down -v` |
 | Rebuild after pulling new code | `docker-compose up --build` |
 | Use a different port | set `APP_PORT=8080` in `.env` |
+
+### Starting over
+
+- **Clear the library but keep accounts:** `docker-compose exec app php artisan games:reset --force`. It deletes every game
+  in the Essense API and all local votes and daily actions together, so nothing is left pointing at a deleted game.
+  Without `--force` it asks first.
+- **A completely empty app:** run `games:reset` first, then `docker-compose down -v`. The volume holds only local data
+  (accounts, votes, the app key); the games themselves live in the Essense API, so `down -v` alone leaves them in place.
 
 ### Troubleshooting
 
