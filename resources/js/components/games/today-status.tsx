@@ -64,7 +64,10 @@ export function TodayStatus({ status, timezone, compact = false, onShowVote, cla
             aria-labelledby="today-heading"
             className={cn(
                 'rounded-xl',
-                status.canAct ? 'bg-secondary text-secondary-foreground' : 'bg-muted text-foreground border',
+                // Available: brand fill. Used: the same tint and ring as your vote row: today's action is yours.
+                status.canAct
+                    ? 'bg-secondary text-secondary-foreground'
+                    : 'bg-brand-tint text-brand-tint-foreground ring-brand-line ring-1 ring-inset',
                 compact ? 'flex items-center justify-between gap-3 px-4 py-3' : 'p-5',
                 className,
             )}

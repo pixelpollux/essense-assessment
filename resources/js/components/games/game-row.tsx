@@ -67,7 +67,7 @@ export function GameRow({ game, rank, canAct, pending, focusToken, onVote, onRem
                 arrived && 'outline-ring outline-2 outline-offset-2',
             )}
         >
-            <span className={cn('text-lg font-semibold tabular-nums', rank === 1 ? 'text-foreground' : 'text-muted-foreground')}>
+            <span className={cn('text-lg font-semibold tabular-nums', rank === 1 ? 'text-brand-ink' : 'text-muted-foreground')}>
                 <span className="sr-only">Rank </span>
                 {rank}
             </span>
