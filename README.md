@@ -29,6 +29,7 @@ The first run builds the image, which takes a few minutes. After that, `docker-c
 
 | Task | Command |
 |---|---|
+| Check your API key works | `docker-compose exec app php artisan essense:ping` |
 | Run in the background | `docker-compose up -d` |
 | Follow the app logs | `docker-compose logs -f` |
 | Stop | `docker-compose down` |
@@ -40,3 +41,5 @@ The first run builds the image, which takes a few minutes. After that, `docker-c
 
 - **`required variable ESSENSE_API_KEY is missing a value`**: `.env` is missing or `ESSENSE_API_KEY` is empty. Copy `.env.example` to `.env` and set the key.
 - **Port 8000 is already in use**: set `APP_PORT` in `.env` to a free port.
+- **The app says the game library is unavailable**: run `docker-compose exec app php artisan essense:ping`. It reports
+  whether the key is missing, rejected, or the API can't be reached. After changing `.env`, restart with `docker-compose up -d`.
