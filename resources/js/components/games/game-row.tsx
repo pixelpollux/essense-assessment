@@ -1,10 +1,11 @@
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { flyTokenTo } from '@/lib/token-flight';
 import { cn } from '@/lib/utils';
 import { type Game } from '@/types/games';
-import { Check, Ellipsis, LoaderCircle, Trash2 } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { Ellipsis, LoaderCircle, Trash2 } from 'lucide-react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { ActionToken } from './action-token';
 
 export const votesLabel = (votes: number) => (votes === 1 ? '1 vote' : `${votes} votes`);
 
@@ -26,11 +27,17 @@ type Props = {
 export function GameRow({ game, rank, canAct, pending, focusToken, onVote, onRemoveVote, onRemove }: Props) {
     const rowRef = useRef<HTMLLIElement>(null);
     const actionRef = useRef<HTMLButtonElement>(null);
+    const tokenRef = useRef<HTMLSpanElement>(null);
     const [arrived, setArrived] = useState(false);
 
+    // When this row becomes your vote, today's token travels here from the status.
+    useLayoutEffect(() => {
+        if (game.votedByMe) flyTokenTo(tokenRef.current);
+    }, [game.votedByMe]);
+
     // Focus arrives here after a vote change or "jump to my vote". Scroll only if the row isn't already
-    // clear of the sticky status area, then show a brief ring: after a tap the browser draws no focus
-    // ring, so pointer users need their own cue. The ring is static, so reduced motion needs no variant.
+    // clear of the sticky bar and the bottom message area, then show a brief ring: after a tap the
+    // browser draws no focus ring, so pointer users need their own cue. The ring is static.
     useEffect(() => {
         const row = rowRef.current;
         if (focusToken === 0 || !row) return;
@@ -45,7 +52,7 @@ export function GameRow({ game, rank, canAct, pending, focusToken, onVote, onRem
         actionRef.current.focus({ preventScroll: true });
         const stickyBottom = document.querySelector('[data-sticky-status]')?.getBoundingClientRect().bottom ?? 0;
         const rect = row.getBoundingClientRect();
-        if (rect.top < stickyBottom + 8 || rect.bottom > window.innerHeight) {
+        if (rect.top < stickyBottom + 8 || rect.bottom > window.innerHeight - 96) {
             const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             row.scrollIntoView({ block: 'center', behavior: reduceMotion ? 'auto' : 'smooth' });
         }
@@ -62,27 +69,26 @@ export function GameRow({ game, rank, canAct, pending, focusToken, onVote, onRem
             className={cn(
                 // rank | name | action | count | menu. Count and menu are fixed at the right edge, so counts
                 // line up whichever button a row shows (Vote, Remove vote, or none once today's action is used).
-                'grid grid-cols-[2.25rem_minmax(0,1fr)_auto_auto] items-center gap-x-2 rounded-lg px-3 py-3 sm:grid-cols-[2.5rem_minmax(0,1fr)_auto_6rem_2.5rem] sm:gap-x-3',
-                game.votedByMe && 'bg-brand-tint text-brand-tint-foreground ring-brand-line ring-1 ring-inset',
-                arrived && 'outline-ring outline-2 outline-offset-2',
+                'grid grid-cols-[2.25rem_minmax(0,1fr)_auto_auto] items-center gap-x-2 rounded-md py-4 sm:grid-cols-[3rem_minmax(0,1fr)_auto_5.5rem_2.5rem] sm:gap-x-3',
+                arrived && 'outline-ring outline-2 outline-offset-4',
             )}
         >
-            <span className={cn('text-lg font-semibold tabular-nums', rank === 1 ? 'text-brand-ink' : 'text-muted-foreground')}>
+            <span className={cn('text-2xl font-semibold tabular-nums', rank === 1 ? 'text-brand-ink' : 'text-muted-foreground')}>
                 <span className="sr-only">Rank </span>
                 {rank}
             </span>
 
             <div className="min-w-0">
-                <p className="font-medium break-words">{game.name}</p>
-                <div className="mt-1 flex flex-wrap items-center gap-2 text-sm sm:hidden">
-                    <span className="tabular-nums">{votesLabel(game.votes)}</span>
-                    {game.votedByMe && <YourVoteBadge />}
+                <p className="text-title font-medium break-words">{game.name}</p>
+                <div className="text-muted-foreground mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+                    <span className="tabular-nums sm:hidden">{votesLabel(game.votes)}</span>
+                    {game.votedByMe && (
+                        <span className="text-foreground inline-flex items-center gap-1.5 font-medium">
+                            <ActionToken ref={tokenRef} state="placed" size="sm" />
+                            Your vote
+                        </span>
+                    )}
                 </div>
-                {game.votedByMe && (
-                    <div className="mt-1 hidden sm:block">
-                        <YourVoteBadge />
-                    </div>
-                )}
             </div>
 
             <div className="flex justify-end">
@@ -113,7 +119,7 @@ export function GameRow({ game, rank, canAct, pending, focusToken, onVote, onRem
                             {pending && <LoaderCircle aria-hidden className="animate-spin" />}
                             Vote
                         </Button>
-                    ) : null /* Today's action is used: the status panel says so, so no row of disabled buttons. */
+                    ) : null /* Today's action is used: the status says so, so no row of disabled buttons. */
                 }
             </div>
 
@@ -134,14 +140,5 @@ export function GameRow({ game, rank, canAct, pending, focusToken, onVote, onRem
                 </DropdownMenuContent>
             </DropdownMenu>
         </li>
-    );
-}
-
-function YourVoteBadge() {
-    return (
-        <Badge variant="secondary" className="gap-1">
-            <Check aria-hidden className="size-3" />
-            Your vote
-        </Badge>
     );
 }

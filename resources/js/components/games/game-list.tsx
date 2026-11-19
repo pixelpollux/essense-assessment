@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useRankAnimation } from '@/hooks/use-rank-animation';
+import { recordTokenOrigin } from '@/lib/token-flight';
 import { type Game } from '@/types/games';
 import { router } from '@inertiajs/react';
 import { Search } from 'lucide-react';
@@ -53,6 +54,7 @@ export function GameList({ games, canAct, onSuggest, reveal = null }: Props) {
 
     const changeVote = (game: Game, method: 'post' | 'delete') => {
         setPendingId(game.id);
+        if (method === 'post') recordTokenOrigin(); // the token flies from the status to this row
         router.visit(route(method === 'post' ? 'votes.store' : 'votes.destroy', game.id), {
             method,
             preserveScroll: true,
@@ -78,7 +80,7 @@ export function GameList({ games, canAct, onSuggest, reveal = null }: Props) {
     return (
         <section aria-labelledby="ranking-heading" className="space-y-4">
             <div className="flex items-baseline justify-between gap-3">
-                <h2 id="ranking-heading" ref={headingRef} tabIndex={-1} className="text-2xl font-semibold tracking-tight outline-none">
+                <h2 id="ranking-heading" ref={headingRef} tabIndex={-1} className="text-xl font-bold tracking-tight outline-none">
                     Ranking
                 </h2>
                 <p className="text-muted-foreground text-sm tabular-nums">{games.length === 1 ? '1 game' : `${games.length} games`}</p>
@@ -103,21 +105,25 @@ export function GameList({ games, canAct, onSuggest, reveal = null }: Props) {
             )}
 
             {games.length === 0 ? (
-                <div className="rounded-xl border border-dashed px-6 py-10 text-center">
-                    <p className="text-lg font-semibold">No games yet</p>
-                    <p className="text-muted-foreground mx-auto mt-1 max-w-sm text-sm">
-                        Suggest the first one. The game with the most votes rises to the top.
+                <div className="border-y py-10">
+                    <p className="text-title font-semibold">No games yet</p>
+                    <p className="text-muted-foreground mt-1 text-pretty">
+                        {canAct ? 'Suggest the first one above. ' : ''}The game with the most votes rises to the top.
                     </p>
                 </div>
             ) : shown.length === 0 ? (
-                <div className="rounded-xl border border-dashed px-6 py-8 text-center">
+                <div className="border-y py-8">
                     <p className="font-medium">No games match “{filter.trim()}”.</p>
-                    <Button variant="link" className="mt-1" onClick={() => onSuggest(filter.trim())}>
-                        Suggest “{filter.trim()}”
-                    </Button>
+                    {canAct ? (
+                        <Button variant="link" className="mt-1 h-auto px-0" onClick={() => onSuggest(filter.trim())}>
+                            Suggest “{filter.trim()}”
+                        </Button>
+                    ) : (
+                        <p className="text-muted-foreground mt-1 text-sm">You can suggest it after midnight.</p>
+                    )}
                 </div>
             ) : (
-                <ol ref={listRef} className="space-y-1">
+                <ol ref={listRef} className="divide-y">
                     {shown.map((game) => (
                         <GameRow
                             key={game.id}

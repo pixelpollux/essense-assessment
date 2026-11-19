@@ -26,23 +26,26 @@ export function FlashMessage({ flash }: { flash: Flash }) {
     const error = !dismissed && flash.error;
     const success = !dismissed && !flash.error && flash.success;
 
+    // Pinned to the bottom of the screen, so a message is visible at any scroll depth.
     return (
-        <>
-            <div role="alert">
-                {error && (
-                    <Message tone="error" onDismiss={dismiss}>
-                        {error}
-                    </Message>
-                )}
+        <div className="pointer-events-none fixed inset-x-0 bottom-0 z-30 px-4 pb-4">
+            <div className="pointer-events-auto mx-auto max-w-2xl space-y-2">
+                <div role="alert">
+                    {error && (
+                        <Message tone="error" onDismiss={dismiss}>
+                            {error}
+                        </Message>
+                    )}
+                </div>
+                <div role="status">
+                    {success && (
+                        <Message tone="success" onDismiss={dismiss}>
+                            {success}
+                        </Message>
+                    )}
+                </div>
             </div>
-            <div role="status">
-                {success && (
-                    <Message tone="success" onDismiss={dismiss}>
-                        {success}
-                    </Message>
-                )}
-            </div>
-        </>
+        </div>
     );
 }
 
@@ -53,8 +56,8 @@ function Message({ tone, onDismiss, children }: { tone: 'error' | 'success'; onD
         <div
             className={
                 tone === 'error'
-                    ? 'border-destructive/40 text-destructive bg-background mb-3 flex items-start gap-2 rounded-lg border py-1 pr-1 pl-4 text-sm font-medium shadow-sm'
-                    : 'bg-background mb-3 flex items-start gap-2 rounded-lg border py-1 pr-1 pl-4 text-sm font-medium shadow-sm'
+                    ? 'border-destructive/50 text-destructive bg-card flex items-start gap-2 rounded-lg border py-1 pr-1 pl-4 text-sm font-medium shadow-lg'
+                    : 'bg-card flex items-start gap-2 rounded-lg border py-1 pr-1 pl-4 text-sm font-medium shadow-lg'
             }
         >
             <Icon aria-hidden className={tone === 'success' ? 'text-secondary-ink mt-2.5 size-4 shrink-0' : 'mt-2.5 size-4 shrink-0'} />

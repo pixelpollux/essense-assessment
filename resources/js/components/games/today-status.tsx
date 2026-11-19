@@ -1,8 +1,7 @@
-import { cn } from '@/lib/utils';
 import { type DailyStatus } from '@/types/games';
 import { router } from '@inertiajs/react';
-import { Clock } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { ActionToken } from './action-token';
 
 /** "Australia/Sydney" → "Sydney"; "UTC" stays "UTC". */
 function placeName(timezone: string): string {
@@ -33,95 +32,89 @@ function useResetClock(resetsAt: string): number {
     return now;
 }
 
-function headline(status: DailyStatus): string {
-    if (status.canAct) return '1 action left today';
-    return status.usedFor === 'add' ? 'You suggested a game today' : "You've voted today";
+/** The game named in the status, as a button that jumps to its row when a jump is available. */
+function GameName({ name, onShow }: { name: string; onShow?: () => void }) {
+    if (!onShow) return <>“{name}”</>;
+    return (
+        <button type="button" onClick={onShow} className="decoration-brand-line underline decoration-2 underline-offset-4">
+            “{name}”
+        </button>
+    );
+}
+
+function statusSentence(status: DailyStatus, onShowVote?: () => void): React.ReactNode {
+    if (status.canAct) return "You have today's action.";
+    if (status.usedFor === 'add') return <>Your action today added “{status.gameName}”.</>;
+    return (
+        <>
+            Your action today went to <GameName name={status.gameName ?? ''} onShow={onShowVote} />.
+        </>
+    );
 }
 
 type Props = {
     status: DailyStatus;
     timezone: string;
-    compact?: boolean;
     /** Jump to the game you voted for today (clears the filter, scrolls, focuses "Remove vote"). */
     onShowVote?: () => void;
-    className?: string;
+    /** The suggest form, shown while an action is available. */
     children?: React.ReactNode;
 };
 
 /**
- * Where the user stands today. Filled with the secondary brand color while an action is
- * available; neutral (with an edge, so it stays visible in dark mode) once it's used.
- * Only the headline and detail are a live region: the countdown ticks every minute and
- * must not be re-announced.
+ * Where the user stands today, written as a sentence beside today's token. Only the sentence and
+ * its detail are a live region: the countdown ticks every minute and must not be re-announced.
  */
-export function TodayStatus({ status, timezone, compact = false, onShowVote, className, children }: Props) {
+export function TodayStatus({ status, timezone, onShowVote, children }: Props) {
     const now = useResetClock(status.resetsAt);
     const remaining = timeUntil(status.resetsAt, now);
-    const votedToday = !status.canAct && status.usedFor === 'vote';
+    const refunded = status.canAct && status.refundReason === 'game_removed';
 
     return (
-        <section
-            aria-labelledby="today-heading"
-            className={cn(
-                'rounded-xl',
-                // Available: brand fill. Used: the same tint and ring as your vote row: today's action is yours.
-                status.canAct
-                    ? 'bg-secondary text-secondary-foreground'
-                    : 'bg-brand-tint text-brand-tint-foreground ring-brand-line ring-1 ring-inset',
-                compact ? 'flex items-center justify-between gap-3 px-4 py-3' : 'p-5',
-                className,
-            )}
-        >
-            <div className="min-w-0">
+        <section aria-labelledby="today-heading" className="flex gap-4 sm:gap-6">
+            <ActionToken state={status.canAct ? 'available' : 'spent'} className="mt-0.5" />
+            <div className="min-w-0 flex-1">
                 <div aria-live="polite">
-                    <h2
-                        id="today-heading"
-                        tabIndex={-1}
-                        className={cn('font-semibold tracking-tight text-balance outline-none', compact ? 'text-base' : 'text-2xl')}
-                    >
-                        {headline(status)}
+                    <h2 id="today-heading" tabIndex={-1} className="text-status font-semibold tracking-tight text-balance outline-none">
+                        {statusSentence(status, onShowVote)}
                     </h2>
-                    <p className={cn('text-sm text-pretty', compact ? 'opacity-85' : 'mt-1 opacity-90')}>
-                        {status.canAct ? (
-                            status.refundReason === 'game_removed' ? (
-                                `“${status.gameName}” was removed, so today's action was given back.`
-                            ) : compact ? (
-                                'Vote or suggest a game.'
-                            ) : (
-                                'Vote for a game or suggest a new one.'
-                            )
-                        ) : status.usedFor === 'add' ? (
-                            `You added “${status.gameName}”.`
-                        ) : (
-                            <>
-                                You voted for{' '}
-                                {onShowVote ? (
-                                    <button type="button" onClick={onShowVote} className="font-medium underline underline-offset-4">
-                                        “{status.gameName}”
-                                    </button>
-                                ) : (
-                                    `“${status.gameName}”`
-                                )}
-                                .
-                            </>
-                        )}
+                    <p className="text-muted-foreground mt-2 text-pretty">
+                        {refunded
+                            ? `“${status.gameName}” was removed, so your action came back. Vote for a game, or suggest one.`
+                            : status.canAct
+                              ? 'Vote for a game, or suggest one.'
+                              : status.usedFor === 'vote'
+                                ? 'Changed your mind? Remove your vote today to get the action back.'
+                                : 'You can vote or suggest again after midnight.'}
                     </p>
                 </div>
-                {compact ? (
-                    <p className="mt-0.5 text-xs opacity-80">Resets in {remaining}</p>
-                ) : (
-                    <p className="mt-4 flex items-center gap-1.5 text-sm opacity-85">
-                        <Clock aria-hidden className="size-4 shrink-0" />
-                        <span>
-                            Resets at midnight ({placeName(timezone)} time), <span className="whitespace-nowrap">in {remaining}</span>
-                        </span>
-                    </p>
-                )}
-                {!compact && votedToday && (
-                    <p className="mt-2 text-sm opacity-85">Changed your mind? Remove your vote today to get the action back.</p>
-                )}
+                <p className="text-muted-foreground mt-1 text-sm">
+                    {status.canAct ? 'Resets' : 'Back'} at midnight ({placeName(timezone)} time),{' '}
+                    <span className="whitespace-nowrap">in {remaining}</span>.
+                </p>
+                {children && <div className="mt-6">{children}</div>}
             </div>
-            {children}
         </section>
+    );
+}
+
+/**
+ * The compact status that stays at the top of the screen once the full status has scrolled away.
+ * Not a live region: the full status already announces changes. Unmounted while hidden.
+ */
+export function StatusBar({ status, onShowVote }: { status: DailyStatus; onShowVote?: () => void }) {
+    const now = useResetClock(status.resetsAt);
+
+    return (
+        <div data-sticky-status className="bg-background fixed inset-x-0 top-0 z-20 border-b">
+            <div className="mx-auto flex max-w-2xl items-center gap-3 px-4 py-2.5 sm:px-6">
+                <ActionToken state={status.canAct ? 'available' : 'spent'} size="sm" />
+                <p className="min-w-0 flex-1 text-sm font-semibold">{statusSentence(status, onShowVote)}</p>
+                <p className="text-muted-foreground shrink-0 text-xs tabular-nums">
+                    <span className="sr-only">Resets in </span>
+                    {timeUntil(status.resetsAt, now)}
+                </p>
+            </div>
+        </div>
     );
 }

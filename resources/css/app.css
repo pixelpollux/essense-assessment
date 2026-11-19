@@ -8,7 +8,14 @@
 
 @theme {
     --font-sans:
-        'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+        'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+    /* The daily status sentence: the page's type-led headline. */
+    --text-status: 1.75rem;
+    --text-status--line-height: 1.2;
+    /* Game titles in the ranking. */
+    --text-title: 1.0625rem;
+    --text-title--line-height: 1.4;
 
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
@@ -41,9 +48,9 @@
     --color-border: var(--border);
     --color-input: var(--input);
     --color-ring: var(--ring);
-    --color-brand-tint: var(--brand-tint);
-    --color-brand-tint-foreground: var(--brand-tint-foreground);
     --color-brand-line: var(--brand-line);
+    --color-token: var(--token);
+    --color-token-foreground: var(--token-foreground);
     --color-brand-ink: var(--brand-ink);
     --color-secondary-ink: var(--secondary-ink);
 
@@ -82,29 +89,29 @@
 }
 
 :root {
-    --background: hsl(0, 0%, 100%);
-    --foreground: hsl(0, 0%, 3.9%);
-    --card: hsl(0, 0%, 100%);
-    --card-foreground: hsl(0, 0%, 3.9%);
-    --popover: hsl(0, 0%, 100%);
-    --popover-foreground: hsl(0, 0%, 3.9%);
+    --background: #ffffff; /* Paper */
+    --foreground: #1d1418; /* Ink, 18:1 */
+    --card: #ffffff;
+    --card-foreground: #1d1418;
+    --popover: #ffffff;
+    --popover-foreground: #1d1418;
     /* Brand: burgundy #420217 + lime #d0ff15. Light theme: burgundy leads, lime is a fill with burgundy on it. */
     --primary: #420217; /* white on it: 16.8:1 */
     --primary-foreground: #ffffff;
     --secondary: #d0ff15; /* never as text or a line on light backgrounds (1.2:1) */
     --secondary-foreground: #420217; /* 14.4:1 on lime */
-    --muted: hsl(0, 0%, 96.1%);
-    --muted-foreground: hsl(0, 0%, 45.1%);
-    --accent: hsl(0, 0%, 96.1%);
-    --accent-foreground: hsl(0, 0%, 9%);
+    --muted: #f6f1f2; /* Mist: quiet surfaces */
+    --muted-foreground: #6e5d63; /* Smoke, 6.2:1 on Paper, 5.5:1 on Mist */
+    --accent: #f6f1f2; /* hover surface */
+    --accent-foreground: #1d1418;
     --destructive: #b91c1c; /* 6.5:1 as text on white and under white text (was 3.8:1) */
     --destructive-foreground: #ffffff;
-    --border: hsl(0, 0%, 92.8%);
-    --input: hsl(0, 0%, 89.8%);
+    --border: #ece4e6; /* hairline dividers (decorative) */
+    --input: #8f7d83; /* Edge: control outlines, 3.9:1 (WCAG 1.4.11; the starter grey was 1.3:1) */
     --ring: #420217;
-    --brand-tint: #faffe8; /* "your vote" row fill; burgundy on it 16.4:1 */
-    --brand-tint-foreground: #420217;
     --brand-line: #420217; /* non-text edges of "your vote", 16.8:1 on white */
+    --token: #d0ff15; /* today's token: Volt in both themes, the one constant object */
+    --token-foreground: #420217; /* 14.4:1 on Volt */
     --brand-ink: #420217; /* the brand as text: wordmark, rank 1. 16.8:1 on white, 16.4:1 on the tint */
     --secondary-ink: #536608; /* lime shade for text/lines on light, 6.4:1 */
     --chart-1: hsl(12, 76%, 61%);
@@ -124,29 +131,29 @@
 }
 
 .dark {
-    --background: hsl(0, 0%, 3.9%);
-    --foreground: hsl(0, 0%, 98%);
-    --card: hsl(0, 0%, 3.9%);
-    --card-foreground: hsl(0, 0%, 98%);
-    --popover: hsl(0, 0%, 3.9%);
-    --popover-foreground: hsl(0, 0%, 98%);
+    --background: #1a0b11; /* Night: claret-tinted, not neutral black */
+    --foreground: #f6eef1; /* 16.8:1 */
+    --card: #221018;
+    --card-foreground: #f6eef1;
+    --popover: #221018;
+    --popover-foreground: #f6eef1;
     /* Dark theme: roles swap. Lime leads, burgundy is a fill with lime on it. */
     --primary: #d0ff15; /* burgundy on it: 14.4:1 */
     --primary-foreground: #420217;
     --secondary: #420217; /* never as text or a line on dark backgrounds (1.2:1) */
     --secondary-foreground: #d0ff15; /* 14.5:1 on burgundy */
-    --muted: hsl(0, 0%, 6.9%);
-    --muted-foreground: hsl(0, 0%, 63.9%);
-    --accent: hsl(0, 0%, 14.9%);
-    --accent-foreground: hsl(0, 0%, 98%);
+    --muted: #261219;
+    --muted-foreground: #b8a5ac; /* 8.2:1 on Night, 7.6:1 on muted */
+    --accent: #2e1820; /* hover surface */
+    --accent-foreground: #f6eef1;
     --destructive: #f87171; /* 7.2:1 as text on the dark background */
     --destructive-foreground: #450a0a; /* 5.8:1 on #f87171 */
-    --border: hsl(0, 0%, 14.9%);
-    --input: hsl(0, 0%, 14.9%);
+    --border: #35212a; /* hairline dividers (decorative) */
+    --input: #7a6168; /* Edge: control outlines, 3.4:1 */
     --ring: #d0ff15;
-    --brand-tint: #1e220b; /* lime on it 14.0:1 */
-    --brand-tint-foreground: #d0ff15;
     --brand-line: #d0ff15; /* 17.0:1 on the dark background */
+    --token: #d0ff15;
+    --token-foreground: #420217;
     --brand-ink: #d0ff15; /* 17.0:1 on the dark background */
     --secondary-ink: #cab8be; /* burgundy tint for text/lines on dark, 10.5:1 */
     --chart-1: hsl(220, 70%, 50%);
@@ -184,11 +191,9 @@
         caret-color: var(--brand-line);
     }
 
-    /* On phones the Today strip is sticky: keep focused or scrolled-to elements clear of it
-       (WCAG 2.2, 2.4.11 Focus Not Obscured). Desktop has no sticky overlay above the list. */
-    @media (max-width: 1023.98px) {
-        html {
-            scroll-padding-top: 7.5rem;
-        }
+    /* The compact status bar is fixed to the top once the status scrolls away: keep focused or
+       scrolled-to elements clear of it (WCAG 2.2, 2.4.11 Focus Not Obscured). */
+    html {
+        scroll-padding-top: 4.5rem;
     }
 }

@@ -33,37 +33,36 @@ export function SuggestGameForm({ canAct, initialName = '', autoFocus = false, o
         });
     };
 
-    // Once today's action is used, a disabled form is just noise: say when suggesting opens again.
-    if (!canAct) {
-        return (
-            <div className="space-y-1">
-                <h2 className="text-base font-semibold">Suggest a game</h2>
-                <p className="text-muted-foreground text-sm">You can suggest a game after midnight, when your next action is available.</p>
-            </div>
-        );
-    }
+    // Once today's action is used the form disappears: the status sentence already says why.
+    if (!canAct) return null;
 
     const describedBy = ['name-count', form.errors.name && 'name-error'].filter(Boolean).join(' ');
 
     return (
-        <form onSubmit={submit} noValidate className="space-y-2">
-            <Label htmlFor="name" className="text-base font-semibold">
+        <form onSubmit={submit} noValidate>
+            <Label htmlFor="name" className="text-sm font-medium">
                 Suggest a game
             </Label>
-            <Input
-                id="name"
-                name="name"
-                value={form.data.name}
-                onChange={(e) => form.setData('name', e.target.value)}
-                placeholder="e.g. Ticket to Ride"
-                maxLength={MAX_LENGTH}
-                autoComplete="off"
-                autoFocus={autoFocus}
-                aria-invalid={form.errors.name ? true : undefined}
-                aria-describedby={describedBy}
-                className="h-11"
-            />
-            <div className="flex items-start justify-between gap-3">
+            <div className="mt-2 flex gap-2">
+                <Input
+                    id="name"
+                    name="name"
+                    value={form.data.name}
+                    onChange={(e) => form.setData('name', e.target.value)}
+                    placeholder="e.g. Ticket to Ride"
+                    maxLength={MAX_LENGTH}
+                    autoComplete="off"
+                    autoFocus={autoFocus}
+                    aria-invalid={form.errors.name ? true : undefined}
+                    aria-describedby={describedBy}
+                    className="h-11 min-w-0 flex-1"
+                />
+                <Button type="submit" className="h-11 shrink-0 px-5" disabled={form.processing}>
+                    {form.processing && <LoaderCircle aria-hidden className="animate-spin" />}
+                    Suggest
+                </Button>
+            </div>
+            <div className="mt-2 flex items-start justify-between gap-3">
                 <div className="min-w-0">
                     <InputError id="name-error" message={form.errors.name} />
                 </div>
@@ -72,11 +71,6 @@ export function SuggestGameForm({ canAct, initialName = '', autoFocus = false, o
                     {length}/{MAX_LENGTH}
                 </p>
             </div>
-            <Button type="submit" className="h-11 w-full" disabled={form.processing}>
-                {form.processing && <LoaderCircle aria-hidden className="animate-spin" />}
-                Suggest game
-            </Button>
-            <p className="text-muted-foreground text-sm">Suggesting uses today's action, just like a vote.</p>
         </form>
     );
 }
