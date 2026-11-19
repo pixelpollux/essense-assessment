@@ -1,128 +1,95 @@
-// TEMPORARY: a plain, working page so the full flow can be used and tested end to end.
-// The designed version replaces this in the UI branch.
-import InputError from '@/components/input-error';
+/*
+ * THESIS: Today's action is a game token you place, once a day. The token is the only bold element;
+ * everything else is a quiet single column of type and hairlines. Refuses cards and dashboard panels.
+ * OWN-WORLD: Schibsted Grotesk on Paper (light) or claret Night (dark). Claret #420217 and Volt
+ * #D0FF15 kept exactly: Volt only on the token and the dark primary; claret-tinted neutrals.
+ * STORY: Read where you stand in one sentence, see the ranking, place your token (vote) or suggest
+ * a game, and take it back the same day.
+ * FIRST VIEWPORT: The status sentence beside the token, with the suggest field inline; the ranking
+ * below. One left-aligned 42rem column on every screen; a compact status bar once it scrolls away.
+ * FORM: frontend-design redesign of the "two zones" page (impeccable seed d0a29466 superseded).
+ */
+import { FlashMessage } from '@/components/games/flash-message';
+import { GameList } from '@/components/games/game-list';
+import { LibraryHeader } from '@/components/games/library-header';
+import { SuggestGameForm } from '@/components/games/suggest-game-form';
+import { StatusBar, TodayStatus } from '@/components/games/today-status';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { type SharedData } from '@/types';
-import { type DailyStatus, type Game, type GamesPageProps } from '@/types/games';
-import { Head, Link, router, useForm, usePage } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
+import { type GamesPageProps } from '@/types/games';
+import { Head, router, usePage } from '@inertiajs/react';
+import { CircleAlert, RotateCw } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 
-function statusText(status: DailyStatus): string {
-    if (!status.canAct) {
-        return status.usedFor === 'add'
-            ? `Today's action used: you added “${status.gameName}”.`
-            : `Today's action used: you voted for “${status.gameName}”.`;
-    }
-    if (status.refundReason === 'game_removed') {
-        return `“${status.gameName}” was removed, so today's action was given back. You have 1 action left today.`;
-    }
-    return 'You have 1 action left today: vote for a game or add a new one.';
+/** True once the element has scrolled up out of view (used to show the compact status bar). */
+function useScrolledPast(ref: React.RefObject<HTMLElement | null>): boolean {
+    const [past, setPast] = useState(false);
+
+    useEffect(() => {
+        const el = ref.current;
+        if (!el) return;
+        const observer = new IntersectionObserver(([entry]) => setPast(!entry.isIntersecting && entry.boundingClientRect.top < 0));
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, [ref]);
+
+    return past;
 }
 
 export default function GamesIndex({ games, status, loadError }: GamesPageProps) {
-    const { flash } = usePage<SharedData>().props;
-    const form = useForm({ name: '' });
+    const { auth, flash } = usePage<SharedData>().props;
+    const statusRef = useRef<HTMLDivElement>(null);
+    const showBar = useScrolledPast(statusRef);
+    const [prefill, setPrefill] = useState({ name: '', version: 0 });
 
-    const addGame: FormEventHandler = (e) => {
-        e.preventDefault();
-        form.post(route('games.store'), { preserveScroll: true, onSuccess: () => form.reset() });
+    // "Suggest 'X'" from an empty filter result: carry the text into the form and focus it.
+    const suggest = (name: string) => {
+        setPrefill((p) => ({ name, version: p.version + 1 }));
+        statusRef.current?.scrollIntoView({ block: 'start' });
     };
 
-    const removeGame = (game: Game) => {
-        const votes = game.votes === 1 ? '1 vote' : `${game.votes} votes`;
-        if (window.confirm(`Remove “${game.name}” (${votes}) from the library for everyone?`)) {
-            router.delete(route('games.destroy', game.id), { preserveScroll: true });
-        }
-    };
+    // "Your action today went to 'X'" jumps to that row (it can be far down a long list).
+    const [reveal, setReveal] = useState<{ id: number; n: number } | null>(null);
+    const votedGame = games?.find((g) => g.votedByMe && g.name === status.gameName);
+    const showVote = votedGame ? () => setReveal((r) => ({ id: votedGame.id, n: (r?.n ?? 0) + 1 })) : undefined;
 
     return (
-        <main className="mx-auto max-w-2xl space-y-6 p-4">
-            <Head title="Game library" />
+        <>
+            <Head title="Ranking" />
+            <LibraryHeader />
+            {showBar && <StatusBar status={status} onShowVote={showVote} />}
 
-            <div className="flex items-center justify-between">
-                <h1 className="text-2xl font-semibold">Game library</h1>
-                <Link href={route('logout')} method="post" as="button" className="text-sm underline">
-                    Log out
-                </Link>
-            </div>
+            <main className="mx-auto max-w-2xl px-4 pt-10 pb-32 sm:px-6 sm:pt-14">
+                <h1 className="sr-only">Office Game Library</h1>
 
-            <div aria-live="polite" className="space-y-2">
-                {flash.success && <p className="text-green-700 dark:text-green-400">{flash.success}</p>}
-                {flash.error && <p className="text-red-700 dark:text-red-400">{flash.error}</p>}
-            </div>
-
-            <p aria-live="polite">{statusText(status)}</p>
-
-            <form onSubmit={addGame} className="space-y-2">
-                <Label htmlFor="name">Suggest a game</Label>
-                <div className="flex gap-2">
-                    <Input
-                        id="name"
-                        value={form.data.name}
-                        onChange={(e) => form.setData('name', e.target.value)}
-                        maxLength={100}
-                        aria-invalid={form.errors.name ? true : undefined}
-                        aria-describedby={form.errors.name ? 'name-error' : undefined}
-                    />
-                    <Button type="submit" disabled={form.processing || !status.canAct}>
-                        Add
-                    </Button>
+                <div ref={statusRef}>
+                    <TodayStatus status={status} timezone={auth.user.timezone} onShowVote={showVote}>
+                        {status.canAct && <SuggestGameForm key={prefill.version} canAct initialName={prefill.name} autoFocus={prefill.version > 0} />}
+                    </TodayStatus>
                 </div>
-                <InputError id="name-error" message={form.errors.name} />
-            </form>
 
-            {loadError ? (
-                <div role="alert" className="space-y-2">
-                    <p>{loadError}</p>
-                    <Button variant="outline" onClick={() => router.reload()}>
-                        Try again
-                    </Button>
-                </div>
-            ) : games && games.length === 0 ? (
-                <p>No games yet. Suggest the first one!</p>
-            ) : (
-                <ol className="divide-y">
-                    {games?.map((game) => (
-                        <li key={game.id} className="flex items-center justify-between gap-2 py-2">
-                            <span>
-                                {game.name} · {game.votes === 1 ? '1 vote' : `${game.votes} votes`}
-                                {game.votedByMe && ' · You voted'}
-                            </span>
-                            <span className="flex gap-2">
-                                {game.votedByMe ? (
-                                    <Button
-                                        size="sm"
-                                        variant="outline"
-                                        aria-label={`Remove your vote for ${game.name}`}
-                                        onClick={() => router.delete(route('votes.destroy', game.id), { preserveScroll: true })}
-                                    >
-                                        Remove vote
-                                    </Button>
-                                ) : (
-                                    <Button
-                                        size="sm"
-                                        disabled={!status.canAct}
-                                        aria-label={`Vote for ${game.name}`}
-                                        onClick={() => router.post(route('votes.store', game.id), {}, { preserveScroll: true })}
-                                    >
-                                        Vote
-                                    </Button>
-                                )}
-                                <Button
-                                    size="sm"
-                                    variant="ghost"
-                                    aria-label={`Remove ${game.name} from the library`}
-                                    onClick={() => removeGame(game)}
-                                >
-                                    Remove
+                <div className="mt-14">
+                    {loadError ? (
+                        <section aria-labelledby="ranking-heading">
+                            <h2 id="ranking-heading" className="text-xl font-bold tracking-tight">
+                                Ranking
+                            </h2>
+                            <div role="alert" className="mt-4 border-y py-10 text-center">
+                                <CircleAlert aria-hidden className="text-destructive mx-auto mb-2 size-6" />
+                                <p className="font-medium">{loadError}</p>
+                                <Button variant="outline" className="mt-4 h-10" onClick={() => router.reload()}>
+                                    <RotateCw aria-hidden />
+                                    Try again
                                 </Button>
-                            </span>
-                        </li>
-                    ))}
-                </ol>
-            )}
-        </main>
+                            </div>
+                        </section>
+                    ) : (
+                        <GameList games={games ?? []} canAct={status.canAct} onSuggest={suggest} reveal={reveal} />
+                    )}
+                </div>
+            </main>
+
+            <FlashMessage flash={flash} />
+        </>
     );
 }
