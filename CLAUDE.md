@@ -81,7 +81,9 @@ The developer is a senior frontend-focused full-stack engineer (React/TS, a11y, 
    (`user_id`, `local_date`) enforces one action per day at the database level.
 4. **Database:** SQLite, as a file in a Docker volume.
 5. **Flush / ID reuse:** local rows store the API game ID **and** the game name, and a row only counts if both still
-   match `/games/list`. There's also an artisan `games:reset` command that flushes the API and clears local tables together.
+   match `/games/list`. There's also an artisan `games:reset` command that flushes the API first, then clears `votes` and
+   `daily_actions` in one transaction (if the flush fails, nothing local changes). It keeps user accounts and asks before
+   running in production (`--force` skips it).
 6. **Rule semantics:**
    - Undoing an action on the same day refunds it: removing your vote the same day you cast it gives back today's action.
    - One active vote per user per game (unique index). No piling votes onto the same game across days.

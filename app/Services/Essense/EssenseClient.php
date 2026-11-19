@@ -99,6 +99,18 @@ final class EssenseClient implements EssenseApi
     }
 
     /**
+     * POST /cache/flush. Never retried, like every other change.
+     */
+    public function flushGames(): void
+    {
+        $data = $this->send('/cache/flush');
+
+        if (($data['success'] ?? null) !== true) {
+            throw $this->unexpected('/cache/flush');
+        }
+    }
+
+    /**
      * vote / removeVote / remove all answer {"success": true|false} with HTTP 200.
      */
     private function mutate(string $path, int $id): void

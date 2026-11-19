@@ -218,4 +218,37 @@ class EssenseClientTest extends TestCase
             Http::assertSentCount(1);
         }
     }
+
+    public function test_flush_games_posts_to_cache_flush_with_the_key_in_a_form_body(): void
+    {
+        Http::fake(['essense.test/cache/flush' => Http::response(['success' => true])]);
+
+        $this->client()->flushGames();
+
+        Http::assertSent(fn (Request $request) => $request->method() === 'POST'
+            && $request->url() === 'https://essense.test/cache/flush'
+            && $request->isForm()
+            && $request['api_key'] === 'test-key');
+    }
+
+    public function test_flush_games_is_never_retried(): void
+    {
+        Sleep::fake();
+        Http::fake(['essense.test/cache/flush' => Http::sequence()->pushFailedConnection()->push(['success' => true])]);
+
+        try {
+            $this->client()->flushGames();
+            $this->fail('Expected EssenseUnavailable');
+        } catch (EssenseUnavailable) {
+            Http::assertSentCount(1);
+        }
+    }
+
+    public function test_flush_games_without_success_true_is_unavailable(): void
+    {
+        Http::fake(['essense.test/cache/flush' => Http::response(['success' => false])]);
+
+        $this->expectException(EssenseUnavailable::class);
+        $this->client()->flushGames();
+    }
 }
