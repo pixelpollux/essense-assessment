@@ -38,6 +38,7 @@ Quality of thinking matters more than the number of features.
 - The Essense of Australia Code Challenge API. The endpoint reference lives at its `/docs` page.
 - The API key is a secret. Keep it in `.env` only, read it through `config/services.php`, and never commit it.
 - Only the backend talks to the external API. The browser never calls it directly.
+- **Read `docs/api-notes.md` before touching API code.** It records the tested behavior: form-encoded bodies only, game errors come back as `200`, case-sensitive paths (`/games/removeVote`), and IDs reset after a flush.
 
 ## Working agreements (from the developer)
 
@@ -74,6 +75,7 @@ The developer is a senior frontend-focused full-stack engineer (React/TS, a11y, 
 - Whether local data mirrors the API's game and vote data or is only a ledger of each user's daily actions, and which one is the source of truth.
 - How "local midnight" reaches the server (client sends a timezone or offset? how is it validated?).
 - Database for docker-compose (SQLite file vs. MySQL/Postgres service).
+- How local rows stay correct when API game IDs are reused after `/cache/flush`.
 
 ## Commands
 
