@@ -131,6 +131,37 @@ API IDs, a flush followed by new adds would silently point those rows at *differ
 next to the ID and treat a mismatch as stale, reconcile against `/games/list`, or never flush in a running environment and
 document that. We'll decide this when we design the schema.
 
+### 11. What `/games/add` accepts: almost anything that isn't blank
+
+| Input | Result |
+|---|---|
+| 1 char, numeric-only (`1942`), emoji and accents (`Pokémon 🎮`) | accepted and stored as sent |
+| 255 / 256 / 1,000 / 10,000 chars | accepted: **no length limit**, no truncation |
+| Whitespace only (`"   "`) | rejected: `{"id":-1}` |
+| `"  Zelda  "` | accepted and **not trimmed** (stored with the spaces) |
+| A name containing a newline | accepted, newline stored |
+
+**For us:** the API's validation is far looser than ours should be. In the Form Request: trim (Laravel's
+`TrimStrings` middleware already does this for every input), collapse internal whitespace, reject control
+characters, and set a maximum length ourselves.
+
+### 12. Names are stored HTML-escaped, and escaping isn't idempotent
+
+The API runs names through `htmlspecialchars` (with quotes) when storing them, and returns them escaped from `search`:
+
+| Sent | Stored and returned |
+|---|---|
+| `Baldur's Gate 3` | `Baldur&#039;s Gate 3` |
+| `Tom & Jerry` | `Tom &amp; Jerry` |
+| `The "Best" Game` | `The &quot;Best&quot; Game` |
+| `<script>alert(1)</script>` | `&lt;script&gt;alert(1)&lt;/script&gt;` |
+| `Tom &amp; Jerry` (already escaped) | `Tom &amp;amp; Jerry` (escaped again) |
+
+**For us:** the client decodes names **exactly once** (`html_entity_decode` with `ENT_QUOTES | ENT_HTML5`), which
+gives back exactly what the user typed, including a literal `&amp;`. Send names raw, never pre-escaped.
+Decoded names are safe to show, because React escapes text when rendering. The duplicate check must compare
+decoded names.
+
 ### Other things we noticed
 
 - `/games/list` returns games in ID order, not by votes. We sort them ourselves.
