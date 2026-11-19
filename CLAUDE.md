@@ -89,14 +89,38 @@ The developer is a senior frontend-focused full-stack engineer (React/TS, a11y, 
      refunds today's action to anyone who voted for it or added it *today*, all in one DB transaction.
      The daily-action status is always visible and comes from the server.
    - **Refunds reuse the daily-log row** (no notifications table). A refund sets `refunded_at` and `refund_reason`
-     (`game_removed` | `vote_withdrawn`) on the row. The next action that day updates the same row and clears the refund,
+     (`withdrawn`: you undid your own action, by removing your vote or a game you removed yourself |
+     `game_removed`: someone else removed the game) on the row. The next action that day updates the same row and clears the refund,
      so the plain unique index on (`user_id`, `local_date`) still holds. Taking today's action is atomic: a conditional
      `UPDATE … WHERE refunded_at IS NOT NULL` that must affect exactly 1 row, or an `INSERT` when there's no row
      (a racing second insert is rejected by the unique index).
    - **The status line is computed from that row:** no row means "1 action left today"; an active row means
      "Today's action used: …"; a row refunded for `game_removed` means "*X* was removed, so today's vote was given back"
-     (in an `aria-live` region); a row refunded for `vote_withdrawn` just means "1 action left today".
+     (in an `aria-live` region); a row refunded for `withdrawn` just means "1 action left today".
      Not refunded: votes from earlier days, and removals made outside the app (the leftover rows are ignored, see 5).
+   - **A vote stays active across days** until you remove it: voting again for the same game on a later day is rejected
+     (`AlreadyVoted`) and doesn't use the day's action. **The UI must make "you voted for this" obvious on each game, and
+     show how to remove the vote.**
+   - Removing a game that's already gone throws `GameNotFound` and changes nothing locally (UI: "already removed", refresh).
+   - Ties in the ranking sort by name A–Z, ignoring case.
+7. **Ambiguous API timeouts:** a vote/add that times out may have been applied by the API anyway. We undo locally and
+   warn the user ("We couldn't confirm your vote, check the count before trying again"). Worst case the API total is
+   one too high, which beats local records that disagree with the API.
+8. **Game names** (enforced in the add-game Form Request): trimmed, internal whitespace collapsed, no control characters,
+   max **100** characters. Duplicates compare case-insensitively after collapsing whitespace (`docs/api-notes.md` 11–12).
+
+## Business rules implementation
+
+`App\Services\Library\GameLibrary` holds every rule; `App\Services\Essense\EssenseClient` (behind the `EssenseApi`
+interface) only talks to the API.
+
+- **Ordering rule:** make the local change first in a short transaction (the database decides races), then call the
+  API, then undo the local change if the API fails. Exception: `removeGame` calls the API first, because removal is
+  safe to repeat. **Never hold a DB transaction open across an HTTP call** (SQLite has one writer).
+- `daily_actions.local_date` is a plain `YYYY-MM-DD` string in the user's timezone (no date cast: it would store a time
+  and break lookups).
+- Tests: `tests/Feature/GameLibraryTest.php` runs against real tables with `Tests\Fakes\FakeEssenseApi` bound to
+  `EssenseApi`. The `Cache::lock` around adds is not covered by tests (a real race needs concurrent processes).
 
 ## Commands
 
