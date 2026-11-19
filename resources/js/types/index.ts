@@ -28,7 +28,6 @@ export interface Flash {
 
 export interface SharedData {
     name: string;
-    quote: { message: string; author: string };
     auth: Auth;
     flash: Flash;
     [key: string]: unknown;
