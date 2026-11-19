@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * @property int $id
  * @property int $user_id
- * @property CarbonImmutable $local_date
+ * @property string $local_date "YYYY-MM-DD" in the user's timezone
  * @property ActionType $type
  * @property int|null $game_id
  * @property string $game_name
@@ -29,8 +29,9 @@ class DailyAction extends Model
 
     protected function casts(): array
     {
+        // local_date is deliberately left uncast: it's a plain "YYYY-MM-DD" calendar date in the
+        // user's timezone. A date cast would store "YYYY-MM-DD 00:00:00", and lookups by date would miss.
         return [
-            'local_date' => 'immutable_date',
             'type' => ActionType::class,
             'game_id' => 'integer',
             'refunded_at' => 'immutable_datetime',
