@@ -1,0 +1,528 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-19T22:09:47+00:00",
+  "title": "Design System: Office Game Library",
+  "extensions": {
+    "colorMeta": {
+      "burgundy": {
+        "role": "primary",
+        "displayName": "Ballot Burgundy",
+        "canonical": "#420217",
+        "tonalRamp": [
+          "oklch(15% 0.09 5)",
+          "oklch(26% 0.09 5)",
+          "oklch(38% 0.09 5)",
+          "oklch(50% 0.09 5)",
+          "oklch(62% 0.09 5)",
+          "oklch(74% 0.09 5)",
+          "oklch(85% 0.09 5)",
+          "oklch(95% 0.09 5)"
+        ],
+        "themeRole": "light: primary, ring, brand-line, secondary-foreground; dark: secondary fill, primary-foreground"
+      },
+      "lime": {
+        "role": "secondary",
+        "displayName": "Signal Lime",
+        "canonical": "#d0ff15",
+        "tonalRamp": [
+          "oklch(15% 0.2 120)",
+          "oklch(26% 0.2 120)",
+          "oklch(38% 0.2 120)",
+          "oklch(50% 0.2 120)",
+          "oklch(62% 0.2 120)",
+          "oklch(74% 0.2 120)",
+          "oklch(85% 0.2 120)",
+          "oklch(95% 0.2 120)"
+        ],
+        "themeRole": "light: secondary fill, selection; dark: primary, ring, brand-line, secondary-foreground"
+      },
+      "lime-ink": {
+        "role": "secondary",
+        "displayName": "Lime Ink",
+        "canonical": "#536608",
+        "tonalRamp": [
+          "oklch(15% 0.12 120)",
+          "oklch(26% 0.12 120)",
+          "oklch(38% 0.12 120)",
+          "oklch(50% 0.12 120)",
+          "oklch(62% 0.12 120)",
+          "oklch(74% 0.12 120)",
+          "oklch(85% 0.12 120)",
+          "oklch(95% 0.12 120)"
+        ],
+        "contrast": "6.4:1 on white"
+      },
+      "burgundy-ink": {
+        "role": "secondary",
+        "displayName": "Burgundy Ink",
+        "canonical": "#cab8be",
+        "tonalRamp": [
+          "oklch(15% 0.03 355)",
+          "oklch(26% 0.03 355)",
+          "oklch(38% 0.03 355)",
+          "oklch(50% 0.03 355)",
+          "oklch(62% 0.03 355)",
+          "oklch(74% 0.03 355)",
+          "oklch(85% 0.03 355)",
+          "oklch(95% 0.03 355)"
+        ],
+        "contrast": "10.5:1 on dark ground"
+      },
+      "vote-tint-light": {
+        "role": "secondary",
+        "displayName": "Vote Tint (light)",
+        "canonical": "#faffe8",
+        "tonalRamp": [
+          "oklch(15% 0.05 115)",
+          "oklch(26% 0.05 115)",
+          "oklch(38% 0.05 115)",
+          "oklch(50% 0.05 115)",
+          "oklch(62% 0.05 115)",
+          "oklch(74% 0.05 115)",
+          "oklch(85% 0.05 115)",
+          "oklch(95% 0.05 115)"
+        ]
+      },
+      "vote-tint-dark": {
+        "role": "secondary",
+        "displayName": "Vote Tint (dark)",
+        "canonical": "#1e220b",
+        "tonalRamp": [
+          "oklch(15% 0.05 115)",
+          "oklch(26% 0.05 115)",
+          "oklch(38% 0.05 115)",
+          "oklch(50% 0.05 115)",
+          "oklch(62% 0.05 115)",
+          "oklch(74% 0.05 115)",
+          "oklch(85% 0.05 115)",
+          "oklch(95% 0.05 115)"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "White",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(50% 0 0)",
+          "oklch(62% 0 0)",
+          "oklch(74% 0 0)",
+          "oklch(85% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "ground-light": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "hsl(0, 0%, 100%)",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(50% 0 0)",
+          "oklch(62% 0 0)",
+          "oklch(74% 0 0)",
+          "oklch(85% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "ink-light": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "hsl(0, 0%, 3.9%)",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(50% 0 0)",
+          "oklch(62% 0 0)",
+          "oklch(74% 0 0)",
+          "oklch(85% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "muted-light": {
+        "role": "neutral",
+        "displayName": "Muted Fill",
+        "canonical": "hsl(0, 0%, 96.1%)",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(50% 0 0)",
+          "oklch(62% 0 0)",
+          "oklch(74% 0 0)",
+          "oklch(85% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "muted-ink-light": {
+        "role": "neutral",
+        "displayName": "Muted Ink",
+        "canonical": "hsl(0, 0%, 45.1%)",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(50% 0 0)",
+          "oklch(62% 0 0)",
+          "oklch(74% 0 0)",
+          "oklch(85% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "border-light": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "hsl(0, 0%, 92.8%)",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(50% 0 0)",
+          "oklch(62% 0 0)",
+          "oklch(74% 0 0)",
+          "oklch(85% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "input-light": {
+        "role": "neutral",
+        "displayName": "Input Hairline",
+        "canonical": "hsl(0, 0%, 89.8%)",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(50% 0 0)",
+          "oklch(62% 0 0)",
+          "oklch(74% 0 0)",
+          "oklch(85% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "ground-dark": {
+        "role": "neutral",
+        "displayName": "Night",
+        "canonical": "hsl(0, 0%, 3.9%)",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(50% 0 0)",
+          "oklch(62% 0 0)",
+          "oklch(74% 0 0)",
+          "oklch(85% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "ink-dark": {
+        "role": "neutral",
+        "displayName": "Ink (dark)",
+        "canonical": "hsl(0, 0%, 98%)",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(50% 0 0)",
+          "oklch(62% 0 0)",
+          "oklch(74% 0 0)",
+          "oklch(85% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "muted-dark": {
+        "role": "neutral",
+        "displayName": "Muted Fill (dark)",
+        "canonical": "hsl(0, 0%, 6.9%)",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(50% 0 0)",
+          "oklch(62% 0 0)",
+          "oklch(74% 0 0)",
+          "oklch(85% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "muted-ink-dark": {
+        "role": "neutral",
+        "displayName": "Muted Ink (dark)",
+        "canonical": "hsl(0, 0%, 63.9%)",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(50% 0 0)",
+          "oklch(62% 0 0)",
+          "oklch(74% 0 0)",
+          "oklch(85% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "border-dark": {
+        "role": "neutral",
+        "displayName": "Hairline (dark)",
+        "canonical": "hsl(0, 0%, 14.9%)",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(50% 0 0)",
+          "oklch(62% 0 0)",
+          "oklch(74% 0 0)",
+          "oklch(85% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "destructive-light": {
+        "role": "tertiary",
+        "displayName": "Destructive",
+        "canonical": "#b91c1c",
+        "tonalRamp": [
+          "oklch(15% 0.17 27)",
+          "oklch(26% 0.17 27)",
+          "oklch(38% 0.17 27)",
+          "oklch(50% 0.17 27)",
+          "oklch(62% 0.17 27)",
+          "oklch(74% 0.17 27)",
+          "oklch(85% 0.17 27)",
+          "oklch(95% 0.17 27)"
+        ],
+        "contrast": "6.5:1"
+      },
+      "destructive-dark": {
+        "role": "tertiary",
+        "displayName": "Destructive (dark)",
+        "canonical": "#f87171",
+        "tonalRamp": [
+          "oklch(15% 0.17 22)",
+          "oklch(26% 0.17 22)",
+          "oklch(38% 0.17 22)",
+          "oklch(50% 0.17 22)",
+          "oklch(62% 0.17 22)",
+          "oklch(74% 0.17 22)",
+          "oklch(85% 0.17 22)",
+          "oklch(95% 0.17 22)"
+        ],
+        "contrast": "7.2:1 as text on dark ground"
+      },
+      "destructive-dark-ink": {
+        "role": "tertiary",
+        "displayName": "Destructive Ink (dark)",
+        "canonical": "#450a0a",
+        "tonalRamp": [
+          "oklch(15% 0.1 25)",
+          "oklch(26% 0.1 25)",
+          "oklch(38% 0.1 25)",
+          "oklch(50% 0.1 25)",
+          "oklch(62% 0.1 25)",
+          "oklch(74% 0.1 25)",
+          "oklch(85% 0.1 25)",
+          "oklch(95% 0.1 25)"
+        ],
+        "contrast": "5.8:1 on #f87171"
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Zone headings: Ranking, desktop Today headline."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Sub-headings, compact Today headline, wordmark."
+      },
+      "rank": {
+        "displayName": "Rank",
+        "purpose": "Row rank numeral, tabular; first place in full ink."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Game names and empty-state messages."
+      },
+      "body-sm": {
+        "displayName": "Body small",
+        "purpose": "Status detail, helper copy, counts, flash messages."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Badges and compact reset countdown."
+      }
+    },
+    "shadows": [
+      {
+        "name": "sticky-lift",
+        "value": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+        "purpose": "Compact Today strip in the mobile sticky band and flash messages."
+      },
+      {
+        "name": "overlay",
+        "value": "shadcn stock shadow-md / shadow-lg",
+        "purpose": "Dropdown menus, dialog, bottom sheet."
+      }
+    ],
+    "motion": [
+      {
+        "name": "rank-reorder",
+        "value": "420ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "FLIP slide of moved rows after a reorder; skipped under prefers-reduced-motion."
+      },
+      {
+        "name": "arrival-cue",
+        "value": "1600ms static 2px outline in ring color, 2px offset",
+        "purpose": "Shows where focus landed after a vote change or jump to my vote; static, so no reduced-motion variant."
+      },
+      {
+        "name": "color-transition",
+        "value": "150ms cubic-bezier(0.4, 0, 0.2, 1)",
+        "purpose": "shadcn transition-colors on buttons and badges."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px",
+        "purpose": "Row grid gains the fixed count column; gutter 24px."
+      },
+      {
+        "name": "lg",
+        "value": "1024px",
+        "purpose": "Two zones: sticky 21rem status column beside the ranking; below it, sticky strip + bottom sheet and scroll-padding-top 7.5rem."
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Filled theme primary; reserved for the suggest submit and the mobile Suggest button.",
+      "html": "<button class=\"ds-btn-primary\">Suggest game</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 44px; padding: 8px 16px; border: 0; border-radius: 6px; background: var(--primary, #420217); color: var(--primary-foreground, #ffffff); font: 500 14px/20px 'Instrument Sans', ui-sans-serif, system-ui, sans-serif; cursor: pointer; transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-btn-primary:hover { background: color-mix(in srgb, var(--primary, #420217) 90%, transparent); } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--background, #fff), 0 0 0 4px var(--ring, #420217); }"
+    },
+    {
+      "name": "Vote Button",
+      "kind": "button",
+      "refersTo": "button-vote",
+      "description": "Outline row action; fills with the primary color on hover.",
+      "html": "<button class=\"ds-btn-vote\">Vote</button>",
+      "css": ".ds-btn-vote { display: inline-flex; align-items: center; justify-content: center; height: 40px; min-width: 80px; padding: 8px 16px; border: 1px solid var(--input, hsl(0, 0%, 89.8%)); border-radius: 6px; background: transparent; color: var(--foreground, hsl(0, 0%, 3.9%)); font: 500 14px/20px 'Instrument Sans', ui-sans-serif, system-ui, sans-serif; cursor: pointer; transition: background-color 150ms, color 150ms, border-color 150ms; } .ds-btn-vote:hover { background: var(--primary, #420217); color: var(--primary-foreground, #fff); border-color: var(--primary, #420217); } .ds-btn-vote:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--background, #fff), 0 0 0 4px var(--ring, #420217); }"
+    },
+    {
+      "name": "Destructive Button",
+      "kind": "button",
+      "refersTo": "button-destructive",
+      "description": "Final confirmation in the remove-game dialog only.",
+      "html": "<button class=\"ds-btn-destructive\">Remove game</button>",
+      "css": ".ds-btn-destructive { display: inline-flex; align-items: center; justify-content: center; height: 40px; padding: 8px 16px; border: 0; border-radius: 6px; background: var(--destructive, #b91c1c); color: var(--destructive-foreground, #fff); font: 500 14px/20px 'Instrument Sans', ui-sans-serif, system-ui, sans-serif; cursor: pointer; } .ds-btn-destructive:hover { background: color-mix(in srgb, var(--destructive, #b91c1c) 90%, transparent); } .ds-btn-destructive:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--background, #fff), 0 0 0 4px var(--ring, #420217); }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Suggest-a-game field with label and character counter.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-field-label\">Suggest a game</span><input class=\"ds-input\" placeholder=\"e.g. Ticket to Ride\"><span class=\"ds-field-count\">0/100</span></label>",
+      "css": ".ds-field { display: grid; gap: 8px; font-family: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif; color: var(--foreground, hsl(0, 0%, 3.9%)); } .ds-field-label { font-size: 16px; font-weight: 600; } .ds-input { height: 44px; padding: 8px 12px; border: 1px solid var(--input, hsl(0, 0%, 89.8%)); border-radius: 6px; background: var(--background, #fff); color: inherit; font: 400 14px 'Instrument Sans', sans-serif; caret-color: var(--brand-line, #420217); } .ds-input::placeholder { color: var(--muted-foreground, hsl(0, 0%, 45.1%)); } .ds-input:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--background, #fff), 0 0 0 4px var(--ring, #420217); } .ds-field-count { justify-self: end; font-size: 14px; font-variant-numeric: tabular-nums; color: var(--muted-foreground, hsl(0, 0%, 45.1%)); }"
+    },
+    {
+      "name": "Your Vote Badge",
+      "kind": "chip",
+      "refersTo": "badge-your-vote",
+      "description": "Secondary-filled pill with a check; the non-color ownership signal.",
+      "html": "<span class=\"ds-badge-vote\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M20 6 9 17l-5-5\"/></svg>Your vote</span>",
+      "css": ".ds-badge-vote { display: inline-flex; align-items: center; gap: 4px; padding: 2px 10px; border: 1px solid transparent; border-radius: 9999px; background: var(--secondary, #d0ff15); color: var(--secondary-foreground, #420217); font: 600 12px/16px 'Instrument Sans', ui-sans-serif, system-ui, sans-serif; }"
+    },
+    {
+      "name": "Today Panel",
+      "kind": "card",
+      "refersTo": "today-panel-available",
+      "description": "Where you stand today: secondary fill while an action is available, muted with a border once used.",
+      "html": "<section class=\"ds-today\"><h2 class=\"ds-today-head\">1 action left today</h2><p class=\"ds-today-detail\">Vote for a game or suggest a new one.</p><p class=\"ds-today-reset\">Resets at midnight (Sydney time), in 5 h 12 min</p></section><section class=\"ds-today ds-today--used\"><h2 class=\"ds-today-head\">You've voted today</h2><p class=\"ds-today-detail\">You voted for <u>“Catan”</u>.</p></section>",
+      "css": ".ds-today { padding: 20px; border-radius: 12px; background: var(--secondary, #d0ff15); color: var(--secondary-foreground, #420217); font-family: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif; margin-bottom: 12px; } .ds-today--used { background: var(--muted, hsl(0, 0%, 96.1%)); color: var(--foreground, hsl(0, 0%, 3.9%)); border: 1px solid var(--border, hsl(0, 0%, 92.8%)); } .ds-today-head { margin: 0; font-size: 24px; line-height: 32px; font-weight: 600; letter-spacing: -0.025em; } .ds-today-detail { margin: 4px 0 0; font-size: 14px; opacity: 0.9; } .ds-today-reset { margin: 16px 0 0; font-size: 14px; opacity: 0.85; }"
+    },
+    {
+      "name": "Ranking Row",
+      "kind": "custom",
+      "refersTo": "game-row-mine",
+      "description": "rank | name | action | count | menu grid; your vote is tinted with an inset brand-line ring.",
+      "html": "<ol class=\"ds-rows\"><li class=\"ds-row\"><span class=\"ds-rank ds-rank--first\">1</span><span class=\"ds-name\">Ticket to Ride</span><button class=\"ds-row-btn ds-row-btn--vote\">Vote</button><span class=\"ds-count\">7 votes</span><span class=\"ds-menu\">⋯</span></li><li class=\"ds-row ds-row--mine\"><span class=\"ds-rank\">2</span><span class=\"ds-name\">Catan</span><button class=\"ds-row-btn\">Remove vote</button><span class=\"ds-count\">5 votes</span><span class=\"ds-menu\">⋯</span></li></ol>",
+      "css": ".ds-rows { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-family: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif; color: var(--foreground, hsl(0, 0%, 3.9%)); } .ds-row { display: grid; grid-template-columns: 2.5rem minmax(0, 1fr) auto 6rem 2.5rem; align-items: center; column-gap: 12px; padding: 12px; border-radius: 8px; } .ds-row--mine { background: var(--brand-tint, #faffe8); color: var(--brand-tint-foreground, #420217); box-shadow: inset 0 0 0 1px var(--brand-line, #420217); } .ds-rank { font-size: 18px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--muted-foreground, hsl(0, 0%, 45.1%)); } .ds-rank--first { color: inherit; } .ds-name { font-weight: 500; overflow-wrap: anywhere; } .ds-count { text-align: right; font-size: 14px; font-variant-numeric: tabular-nums; } .ds-menu { display: grid; place-items: center; width: 40px; height: 40px; } .ds-row-btn { height: 40px; padding: 8px 16px; border: 1px solid var(--input, hsl(0, 0%, 89.8%)); border-radius: 6px; background: transparent; color: inherit; font: 500 14px 'Instrument Sans', sans-serif; cursor: pointer; } .ds-row-btn--vote { min-width: 80px; } .ds-row-btn--vote:hover { background: var(--primary, #420217); color: var(--primary-foreground, #fff); border-color: var(--primary, #420217); } .ds-row-btn:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--background, #fff), 0 0 0 4px var(--ring, #420217); }"
+    },
+    {
+      "name": "Flash Message",
+      "kind": "custom",
+      "refersTo": "flash-message",
+      "description": "Dismissible, never auto-clearing action message in the sticky region.",
+      "html": "<div class=\"ds-flash ds-flash--error\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><line x1=\"12\" x2=\"12\" y1=\"8\" y2=\"12\"/><line x1=\"12\" x2=\"12.01\" y1=\"16\" y2=\"16\"/></svg><p>Couldn't reach the library. Check the ranking before trying again.</p><button class=\"ds-flash-x\" aria-label=\"Dismiss message\">×</button></div>",
+      "css": ".ds-flash { display: flex; align-items: flex-start; gap: 8px; padding: 4px 4px 4px 16px; border: 1px solid var(--border, hsl(0, 0%, 92.8%)); border-radius: 8px; background: var(--background, #fff); color: var(--foreground, hsl(0, 0%, 3.9%)); font: 500 14px/20px 'Instrument Sans', ui-sans-serif, system-ui, sans-serif; box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); } .ds-flash svg { margin-top: 10px; flex-shrink: 0; } .ds-flash p { flex: 1; margin: 0; padding: 8px 0; } .ds-flash--error { color: var(--destructive, #b91c1c); border-color: color-mix(in srgb, var(--destructive, #b91c1c) 40%, transparent); } .ds-flash-x { width: 36px; height: 36px; border: 0; border-radius: 6px; background: transparent; color: inherit; font-size: 18px; cursor: pointer; } .ds-flash-x:hover { background: var(--accent, hsl(0, 0%, 96.1%)); } .ds-flash-x:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--background, #fff), 0 0 0 4px var(--ring, #420217); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Daily Ballot Box",
+    "overview": "One considered action a day, and the page never lets you lose track of it. The system is shadcn/ui on a strictly neutral ground (pure white, near-black), with two pinned brand colors doing all the talking: a deep burgundy and an electric lime. They are not decoration. Lime as a fill means \"you can act today\"; a tinted, ringed row means \"this one is yours\". When the day's action is spent, the color drains out of the status panel and it goes grey, which is the whole state change made visible.\n\nThe density is a working list, not a showcase: rows are compact (12px padding, 4px apart), numbers are tabular, counts align in a fixed right-hand column. The status sits beside the ranking on desktop (a sticky 21rem column) and as a solid sticky strip above it on phones. Everything is flat at rest; the only shadows belong to things that genuinely float over content.\n\nThe two brand colors swap roles by theme, because each is about 1.2:1 against a background of similar lightness. In light, burgundy leads (primary fills, focus ring, your-vote edge) and lime is a fill carrying burgundy text. In dark, lime leads and burgundy becomes the fill carrying lime text.",
+    "keyCharacteristics": [
+      "Neutral achromatic ground; color is reserved for state (available, mine, destructive).",
+      "Burgundy and lime swap leading roles between light and dark themes.",
+      "Flat surfaces; tonal fills and 1px rings instead of shadows.",
+      "Instrument Sans throughout, three weights (400, 500, 600), tabular numerals for every count and rank.",
+      "Actions disappear rather than disable once today's action is used.",
+      "WCAG 2.2 AA is a hard floor; contrast ratios live as comments beside the tokens in `resources/css/app.css`."
+    ],
+    "rules": [
+      {
+        "name": "The Same-Lightness Rule",
+        "body": "Neither brand color is ever text or a line on a background of similar lightness: no lime on light, no burgundy on dark. When a lime- or burgundy-colored glyph is needed there, use `lime-ink` or `burgundy-ink`.",
+        "section": "colors"
+      },
+      {
+        "name": "The Role Swap Rule",
+        "body": "Write against the semantic roles (`primary`, `secondary`, `brand-line`, `brand-tint`), never the raw hex. The theme decides which brand color plays which role.",
+        "section": "colors"
+      },
+      {
+        "name": "The Lime Means Go Rule",
+        "body": "A lime (light) or burgundy (dark) fill on the Today panel means an action is available. When it is used, the panel goes to the muted neutral. Don't fill other large surfaces with the secondary color.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tabular Rule",
+        "body": "Every rank, vote count, game count and character counter uses tabular numerals so columns of numbers align.",
+        "section": "typography"
+      },
+      {
+        "name": "The Weight Ceiling Rule",
+        "body": "Weights stop at 600. Emphasis is 500 (game names, the near-limit counter), structure is 600.",
+        "section": "typography"
+      },
+      {
+        "name": "The Floats-Only Rule",
+        "body": "A shadow means \"this sits above scrolling content\". Rows, panels in the flow and empty states never get one.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** put the brand colors through the semantic roles (`primary`, `secondary`, `brand-tint`, `brand-line`, `secondary-ink`) so they swap correctly between themes.",
+      "**Do** keep vote buttons outline (40px, min 80px wide) and reserve filled primary for the Today panel's submit and the mobile Suggest button.",
+      "**Do** hide actions that today's limit makes unavailable, and replace a used-up form with one sentence saying when it opens again.",
+      "**Do** mark ownership with tint, an inset 1px brand-line ring and a \"Your vote\" badge together.",
+      "**Do** use tabular numerals and a fixed right-hand count column so counts align across rows.",
+      "**Do** use competition ranking (1, 2, 2, 4) for tied vote counts.",
+      "**Do** keep status and action messages inside the sticky region, dismissible, never auto-clearing.",
+      "**Do** honor `prefers-reduced-motion` for any movement; static cues (the 1.6s arrival outline) need no variant.",
+      "**Do** record the contrast ratio beside any new color token, and hold every pairing to WCAG 2.2 AA."
+    ],
+    "donts": [
+      "**Don't** use lime as text or a line on a light background, or burgundy on a dark one (about 1.2:1).",
+      "**Don't** show rows of disabled Vote buttons once today's action is used.",
+      "**Don't** stack the status and suggest form above the list as the page's first block on desktop; status sits beside the ranking.",
+      "**Don't** add shadows to rows or in-flow panels; shadow is for elements floating over content.",
+      "**Don't** use the shadcn default destructive red; use the darkened destructive tokens.",
+      "**Don't** add a second typeface or weights above 600.",
+      "**Don't** announce the countdown; only the status headline and detail are live."
+    ]
+  }
+}
