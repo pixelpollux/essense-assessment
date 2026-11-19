@@ -1,0 +1,34 @@
+# Keep the build context small and free of local state.
+.git
+.github
+.idea
+.vscode
+.DS_Store
+
+# Rebuilt inside the image
+node_modules
+vendor
+public/build
+
+# Present only while `npm run dev` is running; if copied in, Laravel would
+# try to load assets from a Vite dev server that doesn't exist.
+public/hot
+
+# Secrets and local data never go into the image
+.env
+.env.*
+!.env.example
+database/*.sqlite*
+
+# Local caches. bootstrap/cache lists dev-only packages (Pail, Sail) that the
+# image doesn't install, which would crash Laravel on boot.
+bootstrap/cache/*.php
+storage/logs/*
+storage/framework/cache/data/*
+storage/framework/sessions/*
+storage/framework/views/*
+
+# Docker files themselves
+Dockerfile
+docker-compose.yml
+.dockerignore
