@@ -18,7 +18,7 @@ use Throwable;
  * values and exceptions. It holds no business rules: those live in the layer that uses it.
  * Observed API behavior is documented in docs/api-notes.md.
  */
-final class EssenseClient
+final class EssenseClient implements EssenseApi
 {
     public function __construct(
         private readonly string $baseUrl,
