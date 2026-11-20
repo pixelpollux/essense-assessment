@@ -44,7 +44,7 @@ class GamesReset extends Command
         } catch (EssenseException $e) {
             $this->components->error(match (true) {
                 $e instanceof EssenseMisconfigured => "The Essense API rejected the request ({$e->reason}). Nothing was changed. Run `php artisan essense:ping` to check the key.",
-                default => 'Could not reach the Essense API, so nothing was changed. Try again in a moment.',
+                default => 'Could not confirm the reset. Local votes and daily actions were kept, but the API may already be empty. Check the library before retrying.',
             });
 
             return self::FAILURE;

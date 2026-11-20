@@ -17,6 +17,8 @@ services:
       DB_CONNECTION: sqlite
       DB_DATABASE: /data/database.sqlite
       ESSENSE_API_KEY: "${ESSENSE_API_KEY:?Set ESSENSE_API_KEY in .env (see README)}"
+      ESSENSE_API_URL: "${ESSENSE_API_URL:-https://codechallenge.essensedesigns.info}"
+      ESSENSE_API_TIMEOUT: "${ESSENSE_API_TIMEOUT:-5}"
     volumes:
       - app-data:/data
     healthcheck:
