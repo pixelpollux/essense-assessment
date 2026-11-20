@@ -86,7 +86,7 @@ export function GameList({ games, canAct, onSuggest, reveal = null }: Props) {
                 <p className="text-muted-foreground text-sm tabular-nums">{games.length === 1 ? '1 game' : `${games.length} games`}</p>
             </div>
 
-            {games.length >= FILTER_FROM && (
+            {(games.length >= FILTER_FROM || filter.length > 0) && (
                 <div className="relative">
                     <Label htmlFor="filter" className="sr-only">
                         Filter games
