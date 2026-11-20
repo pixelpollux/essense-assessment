@@ -111,6 +111,9 @@ records what testing the API by hand revealed.
   local records that disagree with the API. Changes are never retried, so a vote can't be counted twice.
 - **Game IDs restart after `/cache/flush`.** Local rows store the game's name next to its ID and only count while both
   match, so a vote can't silently attach to a new game that reused an old ID.
+- **Games can vanish outside the app** (a flush from the API's docs page, a new API key). Each time the list loads, votes
+  for games that are gone are dropped and today's actions on them are refunded, so nobody is stuck until midnight. This
+  only happens after a successful list, so an API outage never looks like "every game was removed".
 - **The API stores titles HTML-escaped**, and escapes already-escaped text again, so the client decodes exactly once.
 - **`removeVote` reports success even at 0 votes**, so the app only calls it for a vote it has on record.
 
@@ -120,10 +123,10 @@ records what testing the API by hand revealed.
 php artisan test
 ```
 
-122 tests, aimed at the rules rather than coverage numbers:
+130 tests, aimed at the rules rather than coverage numbers:
 
 - **`GameLibraryTest`**: the daily rule in Sydney, Los Angeles and UTC, at 23:59:59 and 00:00:00 local time; refunds;
-  duplicates; leftovers after a flush; undoing local changes when the API fails. It runs on real SQLite tables
+  duplicates; leftovers after a flush; games that vanish outside the app; undoing local changes when the API fails. It runs on real SQLite tables
   against an in-memory fake of the API.
 - **`GameRoutesTest`**: routes, title validation, and that each failure reaches the user as the right message.
 - **`EssenseClientTest`**: one test per API quirk in `docs/api-notes.md`, against faked HTTP. No test can reach the
@@ -152,7 +155,8 @@ composer dev                      # app server, Vite and logs together
 - **A timeout can leave an API total one too high**: the trade-off described above.
 - **The race between two people adding the same title at the same moment** is guarded by a cache lock, but a true
   two-process race isn't covered by tests; only "an add waits for, then gives up on, a held lock" is.
-- **Games added or removed outside the app** (for example from the API's docs page) don't trigger refunds.
+- **Changes made outside the app are only noticed when the list next loads.** Until someone opens the page, a refund
+  for a game removed elsewhere (for example from the API's docs page) hasn't happened yet.
 
 ## How this was built with AI
 

@@ -554,6 +554,87 @@ class GameLibraryTest extends TestCase
     }
 
     // =====================================================================================
+    // Games that disappear outside the app (a flush, a new API key, the API's docs page)
+    // =====================================================================================
+
+    public function test_when_games_vanish_outside_the_app_todays_actions_are_refunded_and_votes_dropped(): void
+    {
+        [$adder, $voter] = [$this->user(), $this->user()];
+        $zelda = $this->library()->addGame($adder, 'Zelda');
+        $this->library()->vote($voter, $zelda->id);
+        $this->api->flush(); // e.g. /cache/flush from the docs page, or a different API key
+
+        $this->assertSame([], $this->library()->games($this->user()));
+
+        $this->assertSame(0, Vote::count());
+        $this->assertStatus($adder, canAct: true, gameName: 'Zelda', refundReason: RefundReason::GameRemoved);
+        $this->assertStatus($voter, canAct: true, gameName: 'Zelda', refundReason: RefundReason::GameRemoved);
+    }
+
+    public function test_after_that_refund_the_user_can_act_again_the_same_day(): void
+    {
+        $voter = $this->user();
+        $this->library()->vote($voter, $this->api->withGame('Zelda'));
+        $this->api->flush();
+        $this->library()->games($voter);
+
+        $this->library()->vote($voter, $this->api->withGame('Mario'));
+
+        $this->assertStatus($voter, canAct: false, usedFor: ActionType::Vote, gameName: 'Mario');
+    }
+
+    public function test_actions_from_earlier_days_are_not_refunded_but_their_votes_are_dropped(): void
+    {
+        $user = $this->user();
+        $this->travelTo(now()->subDay());
+        $this->library()->vote($user, $this->api->withGame('Zelda'));
+        $this->travelTo(CarbonImmutable::parse('2026-11-20 03:00:00', 'UTC'));
+        $this->api->flush();
+
+        $this->library()->games($user);
+
+        $this->assertNull(DailyAction::where('user_id', $user->id)->sole()->refunded_at);
+        $this->assertSame(0, Vote::count());
+    }
+
+    public function test_a_different_game_that_reused_the_id_still_counts_as_the_old_one_being_gone(): void
+    {
+        $voter = $this->user();
+        $this->library()->vote($voter, $this->api->withGame('Zelda')); // ID 1
+        $this->api->flush();
+        $this->api->withGame('Mario');                                // ID 1 again
+
+        $games = $this->library()->games($voter);
+
+        $this->assertFalse($games[0]->votedByMe);
+        $this->assertSame(0, Vote::count());
+        $this->assertStatus($voter, canAct: true, gameName: 'Zelda', refundReason: RefundReason::GameRemoved);
+    }
+
+    public function test_an_add_still_in_progress_is_not_refunded(): void
+    {
+        $adder = $this->user();
+        // An add claims today's action before the API returns the new ID, so game_id is still null.
+        DailyAction::factory()->for($adder)->create(['local_date' => '2026-11-20', 'type' => ActionType::Add, 'game_id' => null, 'game_name' => 'Zelda']);
+
+        $this->library()->games($this->user());
+
+        $this->assertStatus($adder, canAct: false, usedFor: ActionType::Add, gameName: 'Zelda');
+    }
+
+    public function test_nothing_is_changed_when_the_game_list_cannot_be_loaded(): void
+    {
+        $voter = $this->user();
+        $this->library()->vote($voter, $this->api->withGame('Zelda'));
+        $this->api->flush();
+        $this->api->failNext('listGames', EssenseUnavailable::serverError('/games/list', 503));
+
+        $this->assertThrows(fn () => $this->library()->games($voter), EssenseUnavailable::class);
+
+        $this->assertSame(1, Vote::count());
+        $this->assertStatus($voter, canAct: false, usedFor: ActionType::Vote, gameName: 'Zelda');
+    }
+    // =====================================================================================
     // Daily status
     // =====================================================================================
 
