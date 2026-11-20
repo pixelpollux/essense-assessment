@@ -50,7 +50,6 @@ export function SuggestGameForm({ canAct, initialName = '', autoFocus = false, o
                     value={form.data.name}
                     onChange={(e) => form.setData('name', e.target.value)}
                     placeholder="e.g. Ticket to Ride"
-                    maxLength={MAX_LENGTH}
                     autoComplete="off"
                     autoFocus={autoFocus}
                     aria-invalid={form.errors.name ? true : undefined}
