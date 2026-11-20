@@ -15,6 +15,7 @@ import { LibraryHeader } from '@/components/games/library-header';
 import { SuggestGameForm } from '@/components/games/suggest-game-form';
 import { StatusBar, TodayStatus } from '@/components/games/today-status';
 import { Button } from '@/components/ui/button';
+import { useFlashWithNetworkFailures } from '@/hooks/use-network-failures';
 import { type SharedData } from '@/types';
 import { type GamesPageProps } from '@/types/games';
 import { Head, router, usePage } from '@inertiajs/react';
@@ -38,6 +39,8 @@ function useScrolledPast(ref: React.RefObject<HTMLElement | null>): boolean {
 
 export default function GamesIndex({ games, status, loadError }: GamesPageProps) {
     const { auth, flash } = usePage<SharedData>().props;
+    // Server messages, plus network failures that never reached the server (no silent failures).
+    const shownFlash = useFlashWithNetworkFailures(flash);
     const statusRef = useRef<HTMLDivElement>(null);
     const showBar = useScrolledPast(statusRef);
     const [prefill, setPrefill] = useState({ name: '', version: 0 });
@@ -97,7 +100,7 @@ export default function GamesIndex({ games, status, loadError }: GamesPageProps)
                 </div>
             </main>
 
-            <FlashMessage flash={flash} />
+            <FlashMessage flash={shownFlash} />
         </>
     );
 }
