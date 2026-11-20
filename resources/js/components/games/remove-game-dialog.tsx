@@ -8,6 +8,8 @@ type Props = {
     removing: boolean;
     onConfirm: (game: Game) => void;
     onOpenChange: (open: boolean) => void;
+    /** Where focus goes on close. The dialog has no DialogTrigger, so Radix can't return focus by itself. */
+    onCloseAutoFocus: (event: Event) => void;
 };
 
 function consequence(game: Game): string {
@@ -16,10 +18,10 @@ function consequence(game: Game): string {
     return `It has ${votes}, which will be removed for everyone. Anyone who voted for it today gets their action back.`;
 }
 
-export function RemoveGameDialog({ game, removing, onConfirm, onOpenChange }: Props) {
+export function RemoveGameDialog({ game, removing, onConfirm, onOpenChange, onCloseAutoFocus }: Props) {
     return (
         <Dialog open={game !== null} onOpenChange={onOpenChange}>
-            <DialogContent>
+            <DialogContent onCloseAutoFocus={onCloseAutoFocus}>
                 {game && (
                     <>
                         <DialogHeader>

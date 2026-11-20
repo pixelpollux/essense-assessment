@@ -45,6 +45,7 @@ export function GameList({ games, canAct, onSuggest, reveal = null }: Props) {
     }, [reveal]);
     const [toRemove, setToRemove] = useState<Game | null>(null);
     const [removing, setRemoving] = useState(false);
+    const removeOpenerRef = useRef<HTMLElement | null>(null);
 
     const rankById = useMemo(() => ranks(games), [games]);
     const query = filter.trim().toLowerCase().replace(/\s+/g, ' ');
@@ -64,12 +65,21 @@ export function GameList({ games, canAct, onSuggest, reveal = null }: Props) {
         });
     };
 
+    // The dialog closes after Escape, "Keep game", or once a removal request finishes (and the list has
+    // re-rendered). Return focus to the "More actions" button that opened it if that row still exists,
+    // otherwise (the game was removed, or turned out to be gone already) to the Ranking heading.
+    const restoreFocusAfterDialog = (event: Event) => {
+        event.preventDefault();
+        const opener = removeOpenerRef.current;
+        (opener?.isConnected ? opener : headingRef.current)?.focus();
+        removeOpenerRef.current = null;
+    };
+
     const removeGame = (game: Game) => {
         setRemoving(true);
         router.delete(route('games.destroy', game.id), {
             preserveScroll: true,
             preserveState: true,
-            onSuccess: () => headingRef.current?.focus(),
             onFinish: () => {
                 setRemoving(false);
                 setToRemove(null);
@@ -134,7 +144,10 @@ export function GameList({ games, canAct, onSuggest, reveal = null }: Props) {
                             focusToken={focusRequest?.id === game.id ? focusRequest.n : 0}
                             onVote={(g) => changeVote(g, 'post')}
                             onRemoveVote={(g) => changeVote(g, 'delete')}
-                            onRemove={setToRemove}
+                            onRemove={(g, opener) => {
+                                removeOpenerRef.current = opener;
+                                setToRemove(g);
+                            }}
                         />
                     ))}
                 </ol>
@@ -146,7 +159,13 @@ export function GameList({ games, canAct, onSuggest, reveal = null }: Props) {
                 </p>
             )}
 
-            <RemoveGameDialog game={toRemove} removing={removing} onConfirm={removeGame} onOpenChange={(open) => !open && setToRemove(null)} />
+            <RemoveGameDialog
+                game={toRemove}
+                removing={removing}
+                onConfirm={removeGame}
+                onOpenChange={(open) => !open && setToRemove(null)}
+                onCloseAutoFocus={restoreFocusAfterDialog}
+            />
         </section>
     );
 }
