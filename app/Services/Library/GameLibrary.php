@@ -50,6 +50,10 @@ final class GameLibrary
      */
     public function games(User $user): array
     {
+        // Listing first: if the API can't be reached, nothing below runs and nothing local changes.
+        $apiGames = $this->api->listGames();
+        $this->reconcileWithApi($apiGames);
+
         /** @var array<int, string> $myVotes game_id => game_name */
         $myVotes = $user->votes()->pluck('game_name', 'game_id')->all();
 
@@ -61,13 +65,61 @@ final class GameLibrary
                 // ID *and* name must match: a vote from before a flush doesn't count for a new game with the same ID.
                 votedByMe: ($myVotes[$game->id] ?? null) === $game->name,
             ),
-            $this->api->listGames(),
+            $apiGames,
         );
 
         usort($games, fn (LibraryGame $a, LibraryGame $b) => [$b->votes, mb_strtolower($a->name), $a->id]
             <=> [$a->votes, mb_strtolower($b->name), $b->id]);
 
         return $games;
+    }
+
+    /**
+     * Games can disappear outside the app: a /cache/flush (from games:reset elsewhere or the API's docs
+     * page), a different API key, or a removal made directly in the API. Local rows pointing at a game
+     * that's gone would otherwise linger: harmless in the list (ID + name matching ignores them), but
+     * today's daily action would keep blocking its user until midnight.
+     *
+     * So, against the list we just fetched: drop votes for games that are gone, and refund *today's*
+     * actions on them as "game_removed", exactly as an in-app removal would. Earlier days are left alone.
+     * An add still in progress (no game ID yet) is skipped. Writes only when something is stale.
+     *
+     * @param  list<Game>  $apiGames
+     */
+    private function reconcileWithApi(array $apiGames): void
+    {
+        $live = [];
+        foreach ($apiGames as $game) {
+            $live[$game->id."\0".$game->name] = true;
+        }
+        $isGone = fn (int $id, string $name): bool => ! isset($live[$id."\0".$name]);
+
+        $staleVotes = Vote::query()->select('game_id', 'game_name')->distinct()->get()
+            ->filter(fn (Vote $vote) => $isGone($vote->game_id, $vote->game_name));
+
+        $staleActions = DailyAction::with('user')
+            ->whereNotNull('game_id')
+            ->whereNull('refunded_at')
+            // Every user's "today" is within a day of the UTC date (offsets are at most ±14h).
+            ->where('local_date', '>=', now()->subDay()->toDateString())
+            ->get()
+            ->filter(fn (DailyAction $action) => $isGone($action->game_id, $action->game_name)
+                && $action->local_date === $this->localDate($action->user));
+
+        if ($staleVotes->isEmpty() && $staleActions->isEmpty()) {
+            return;
+        }
+
+        DB::transaction(function () use ($staleVotes, $staleActions): void {
+            foreach ($staleVotes as $vote) {
+                Vote::where('game_id', $vote->game_id)->where('game_name', $vote->game_name)->delete();
+            }
+            foreach ($staleActions as $action) {
+                // Conditional, so a concurrent removeGame refunding the same row doesn't get overwritten.
+                DailyAction::whereKey($action->id)->whereNull('refunded_at')
+                    ->update(['refunded_at' => now(), 'refund_reason' => RefundReason::GameRemoved->value]);
+            }
+        });
     }
 
     public function todayStatus(User $user): DailyStatus
