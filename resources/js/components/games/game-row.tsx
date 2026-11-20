@@ -21,13 +21,15 @@ type Props = {
     focusToken: number;
     onVote: (game: Game) => void;
     onRemoveVote: (game: Game) => void;
-    onRemove: (game: Game) => void;
+    /** The opener is the row's "More actions" button, so focus can return to it when the dialog closes. */
+    onRemove: (game: Game, opener: HTMLElement | null) => void;
 };
 
 export function GameRow({ game, rank, canAct, pending, focusToken, onVote, onRemoveVote, onRemove }: Props) {
     const rowRef = useRef<HTMLLIElement>(null);
     const actionRef = useRef<HTMLButtonElement>(null);
     const tokenRef = useRef<HTMLSpanElement>(null);
+    const menuButtonRef = useRef<HTMLButtonElement>(null);
     const [arrived, setArrived] = useState(false);
 
     // When this row becomes your vote, today's token travels here from the status.
@@ -128,12 +130,12 @@ export function GameRow({ game, rank, canAct, pending, focusToken, onVote, onRem
             {/* Non-modal: a modal menu that opens a dialog can leave pointer-events stuck on the page. */}
             <DropdownMenu modal={false}>
                 <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon" className="size-10" aria-label={`More actions for ${game.name}`}>
+                    <Button ref={menuButtonRef} variant="ghost" size="icon" className="size-10" aria-label={`More actions for ${game.name}`}>
                         <Ellipsis aria-hidden />
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                    <DropdownMenuItem className="text-destructive focus:text-destructive" onSelect={() => onRemove(game)}>
+                    <DropdownMenuItem className="text-destructive focus:text-destructive" onSelect={() => onRemove(game, menuButtonRef.current)}>
                         <Trash2 aria-hidden className="text-destructive" />
                         Remove game…
                     </DropdownMenuItem>

@@ -38,6 +38,9 @@ use Throwable;
  */
 final class GameLibrary
 {
+    /** Serializes adds (and games:reset, which must not interleave with one). */
+    public const ADD_LOCK = 'games:add';
+
     public function __construct(private readonly EssenseApi $api) {}
 
     /**
@@ -89,7 +92,7 @@ final class GameLibrary
         $this->ensureCanActToday($user);
 
         // Adds run one at a time, so two people can't both pass the duplicate check for the same title.
-        return Cache::lock('games:add', 10)->block(5, function () use ($user, $name): Game {
+        return Cache::lock(self::ADD_LOCK, 10)->block(5, function () use ($user, $name): Game {
             $this->ensureNotDuplicate($name);
 
             $undo = DB::transaction(fn () => $this->claimToday($user, ActionType::Add, null, $name));

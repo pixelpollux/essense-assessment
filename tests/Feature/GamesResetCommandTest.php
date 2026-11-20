@@ -11,6 +11,7 @@ use App\Services\Essense\Exceptions\EssenseUnavailable;
 use App\Services\Library\GameLibrary;
 use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Cache;
 use Tests\Fakes\FakeEssenseApi;
 use Tests\TestCase;
 
@@ -122,5 +123,36 @@ class GamesResetCommandTest extends TestCase
             ->assertFailed();
 
         $this->assertSame(2, Vote::count());
+    }
+
+    public function test_it_refuses_while_a_game_is_being_added_and_changes_nothing(): void
+    {
+        $this->seedLibrary();
+        $add = Cache::lock(GameLibrary::ADD_LOCK, 10);
+        $add->get(); // an add in progress (taken and checked under the same frozen clock)
+
+        try {
+            $this->artisan('games:reset')
+                ->expectsOutputToContain('A game is being added right now, so nothing was changed')
+                ->assertFailed();
+        } finally {
+            $add->release();
+        }
+
+        $this->assertNotContains('flushGames', $this->api->mutations, 'The API must not be flushed.');
+        $this->assertSame(2, Vote::count());
+        $this->assertSame(3, DailyAction::count());
+    }
+
+    public function test_it_releases_the_add_lock_afterwards_whether_it_succeeds_or_fails(): void
+    {
+        $this->seedLibrary();
+        $this->artisan('games:reset')->assertSuccessful();
+        $this->assertTrue(Cache::lock(GameLibrary::ADD_LOCK, 10)->get(), 'Lock still held after a successful reset.');
+        Cache::lock(GameLibrary::ADD_LOCK)->forceRelease();
+
+        $this->api->failNext('flushGames', EssenseUnavailable::serverError('/cache/flush', 503));
+        $this->artisan('games:reset')->assertFailed();
+        $this->assertTrue(Cache::lock(GameLibrary::ADD_LOCK, 10)->get(), 'Lock still held after a failed reset.');
     }
 }
