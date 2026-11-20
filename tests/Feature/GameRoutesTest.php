@@ -264,10 +264,13 @@ class GameRoutesTest extends TestCase
 
     public function test_an_add_blocked_by_another_add_in_progress_asks_to_try_again(): void
     {
+        // Back to the real clock *before* taking the lock: the lock's expiry and the request's wait are
+        // both measured on it. Taken under the frozen setUp() time, the lock "expired" as soon as the
+        // real date passed that frozen moment, so the test only passed before 2026-11-20 03:00:10 UTC.
+        $this->travelBack();
         $this->app->make('config')->set('cache.default', 'array');
         $lock = Cache::lock('games:add', 10);
         $lock->get();
-        $this->travelBack(); // Lock waits check the real clock; with time frozen the wait would never end.
 
         try {
             $this->actingAs($this->user)->from('/')->post('/games', ['name' => 'Zelda'])
