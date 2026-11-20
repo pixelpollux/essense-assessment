@@ -1,0 +1,33 @@
+# Run with:  cp .env.example .env  (set ESSENSE_API_KEY)  then  docker-compose up
+# Compose reads ${VARS} below from that .env file. The file itself is never copied into the image.
+
+services:
+  app:
+    build: .
+    image: essense-assessment-app
+    ports:
+      - "${APP_PORT:-8000}:80"
+    environment:
+      APP_NAME: "Office Game Library"
+      APP_ENV: production
+      APP_DEBUG: "false"
+      APP_URL: "http://localhost:${APP_PORT:-8000}"
+      LOG_CHANNEL: stderr
+      LOG_LEVEL: info
+      DB_CONNECTION: sqlite
+      DB_DATABASE: /data/database.sqlite
+      ESSENSE_API_KEY: "${ESSENSE_API_KEY:?Set ESSENSE_API_KEY in .env (see README)}"
+      ESSENSE_API_URL: "${ESSENSE_API_URL:-https://codechallenge.essensedesigns.info}"
+      ESSENSE_API_TIMEOUT: "${ESSENSE_API_TIMEOUT:-5}"
+    volumes:
+      - app-data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost/up"]
+      interval: 10s
+      timeout: 3s
+      start_period: 20s
+      retries: 3
+    restart: unless-stopped
+
+volumes:
+  app-data:

@@ -9,12 +9,13 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthLayout from '@/layouts/auth-layout';
 
-interface RegisterForm {
+type RegisterForm = {
     name: string;
     email: string;
     password: string;
     password_confirmation: string;
-}
+    timezone: string;
+};
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm<RegisterForm>({
@@ -22,6 +23,8 @@ export default function Register() {
         email: '',
         password: '',
         password_confirmation: '',
+        // Detected once from the browser; the server validates it and it can't be changed later.
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     });
 
     const submit: FormEventHandler = (e) => {
@@ -99,6 +102,14 @@ export default function Register() {
                             placeholder="Confirm password"
                         />
                         <InputError message={errors.password_confirmation} />
+                    </div>
+
+                    <div className="grid gap-2">
+                        <p className="text-muted-foreground text-sm">
+                            Your daily vote resets at midnight in <span className="text-foreground font-medium">{data.timezone}</span>. This can't be
+                            changed later.
+                        </p>
+                        <InputError message={errors.timezone} />
                     </div>
 
                     <Button type="submit" className="mt-2 w-full" tabIndex={5} disabled={processing}>

@@ -1,0 +1,173 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-19T00:00:00+00:00",
+  "title": "Design System: Office Game Library",
+  "extensions": {
+    "colorMeta": {
+      "claret": { "role": "primary", "displayName": "Claret", "canonical": "#420217", "themeRole": "light: primary, ring, brand-line, brand-ink, secondary-foreground, token-foreground; dark: secondary fill, primary-foreground, token-foreground", "tonalRamp": ["oklch(15% 0.09 5)", "oklch(26% 0.09 5)", "oklch(38% 0.09 5)", "oklch(50% 0.09 5)", "oklch(62% 0.09 5)", "oklch(74% 0.09 5)", "oklch(85% 0.09 5)", "oklch(95% 0.03 5)"] },
+      "volt": { "role": "secondary", "displayName": "Volt", "canonical": "#d0ff15", "themeRole": "both: token fill (constant); light: secondary fill (selection, avatar); dark: primary, ring, brand-line, brand-ink, secondary-foreground", "tonalRamp": ["oklch(15% 0.06 120)", "oklch(26% 0.1 120)", "oklch(38% 0.13 120)", "oklch(50% 0.16 120)", "oklch(62% 0.19 120)", "oklch(74% 0.21 120)", "oklch(85% 0.21 120)", "oklch(95% 0.1 120)"] },
+      "volt-ink": { "role": "secondary", "displayName": "Volt Ink", "canonical": "#536608", "contrast": "6.4:1 on Paper", "tonalRamp": ["oklch(15% 0.05 120)", "oklch(26% 0.08 120)", "oklch(38% 0.1 120)", "oklch(50% 0.12 120)", "oklch(62% 0.12 120)", "oklch(74% 0.1 120)", "oklch(85% 0.07 120)", "oklch(95% 0.03 120)"] },
+      "claret-ink": { "role": "secondary", "displayName": "Claret Ink", "canonical": "#cab8be", "contrast": "10.5:1 on Night", "tonalRamp": ["oklch(15% 0.02 355)", "oklch(26% 0.025 355)", "oklch(38% 0.03 355)", "oklch(50% 0.03 355)", "oklch(62% 0.03 355)", "oklch(74% 0.03 355)", "oklch(85% 0.025 355)", "oklch(95% 0.01 355)"] },
+      "paper": { "role": "neutral", "displayName": "Paper", "canonical": "#ffffff", "tonalRamp": ["oklch(15% 0.01 355)", "oklch(26% 0.01 355)", "oklch(38% 0.01 355)", "oklch(50% 0.01 355)", "oklch(62% 0.01 355)", "oklch(74% 0.01 355)", "oklch(85% 0.01 355)", "oklch(100% 0 0)"] },
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "#1d1418", "contrast": "18:1 on Paper", "tonalRamp": ["oklch(15% 0.015 355)", "oklch(21% 0.015 355)", "oklch(38% 0.015 355)", "oklch(50% 0.015 355)", "oklch(62% 0.015 355)", "oklch(74% 0.015 355)", "oklch(85% 0.015 355)", "oklch(95% 0.01 355)"] },
+      "mist": { "role": "neutral", "displayName": "Mist", "canonical": "#f6f1f2", "tonalRamp": ["oklch(15% 0.008 355)", "oklch(26% 0.008 355)", "oklch(38% 0.008 355)", "oklch(50% 0.008 355)", "oklch(62% 0.008 355)", "oklch(74% 0.008 355)", "oklch(85% 0.008 355)", "oklch(96% 0.008 355)"] },
+      "smoke": { "role": "neutral", "displayName": "Smoke", "canonical": "#6e5d63", "contrast": "6.2:1 on Paper", "tonalRamp": ["oklch(15% 0.02 355)", "oklch(26% 0.02 355)", "oklch(38% 0.02 355)", "oklch(50% 0.02 355)", "oklch(62% 0.02 355)", "oklch(74% 0.02 355)", "oklch(85% 0.02 355)", "oklch(95% 0.01 355)"] },
+      "hairline": { "role": "neutral", "displayName": "Hairline", "canonical": "#ece4e6", "tonalRamp": ["oklch(15% 0.01 355)", "oklch(26% 0.01 355)", "oklch(38% 0.01 355)", "oklch(50% 0.01 355)", "oklch(62% 0.01 355)", "oklch(74% 0.01 355)", "oklch(85% 0.01 355)", "oklch(92% 0.01 355)"] },
+      "edge": { "role": "neutral", "displayName": "Edge", "canonical": "#8f7d83", "contrast": "3.9:1 on Paper (WCAG 1.4.11)", "tonalRamp": ["oklch(15% 0.02 355)", "oklch(26% 0.02 355)", "oklch(38% 0.02 355)", "oklch(50% 0.02 355)", "oklch(60% 0.02 355)", "oklch(74% 0.02 355)", "oklch(85% 0.02 355)", "oklch(95% 0.01 355)"] },
+      "night": { "role": "neutral", "displayName": "Night", "canonical": "#1a0b11", "tonalRamp": ["oklch(15% 0.03 355)", "oklch(19% 0.03 355)", "oklch(26% 0.03 355)", "oklch(38% 0.03 355)", "oklch(50% 0.03 355)", "oklch(62% 0.03 355)", "oklch(80% 0.02 355)", "oklch(95% 0.01 355)"] },
+      "night-surface": { "role": "neutral", "displayName": "Night Surface", "canonical": "#221018", "tonalRamp": ["oklch(15% 0.03 355)", "oklch(21% 0.03 355)", "oklch(28% 0.03 355)", "oklch(38% 0.03 355)", "oklch(50% 0.03 355)", "oklch(62% 0.03 355)", "oklch(80% 0.02 355)", "oklch(95% 0.01 355)"] },
+      "night-hover": { "role": "neutral", "displayName": "Night Hover", "canonical": "#2e1820", "tonalRamp": ["oklch(15% 0.03 355)", "oklch(21% 0.03 355)", "oklch(26% 0.03 355)", "oklch(38% 0.03 355)", "oklch(50% 0.03 355)", "oklch(62% 0.03 355)", "oklch(80% 0.02 355)", "oklch(95% 0.01 355)"] },
+      "night-ink": { "role": "neutral", "displayName": "Night Ink", "canonical": "#f6eef1", "contrast": "16.8:1 on Night", "tonalRamp": ["oklch(15% 0.01 355)", "oklch(26% 0.01 355)", "oklch(38% 0.01 355)", "oklch(50% 0.01 355)", "oklch(62% 0.01 355)", "oklch(74% 0.01 355)", "oklch(85% 0.01 355)", "oklch(95% 0.01 355)"] },
+      "night-smoke": { "role": "neutral", "displayName": "Night Smoke", "canonical": "#b8a5ac", "contrast": "8.2:1 on Night", "tonalRamp": ["oklch(15% 0.02 355)", "oklch(26% 0.02 355)", "oklch(38% 0.02 355)", "oklch(50% 0.02 355)", "oklch(62% 0.02 355)", "oklch(74% 0.02 355)", "oklch(85% 0.02 355)", "oklch(95% 0.01 355)"] },
+      "night-hairline": { "role": "neutral", "displayName": "Night Hairline", "canonical": "#35212a", "tonalRamp": ["oklch(15% 0.03 355)", "oklch(21% 0.03 355)", "oklch(29% 0.03 355)", "oklch(38% 0.03 355)", "oklch(50% 0.03 355)", "oklch(62% 0.03 355)", "oklch(80% 0.02 355)", "oklch(95% 0.01 355)"] },
+      "night-edge": { "role": "neutral", "displayName": "Night Edge", "canonical": "#7a6168", "contrast": "3.4:1 on Night (WCAG 1.4.11)", "tonalRamp": ["oklch(15% 0.03 355)", "oklch(26% 0.03 355)", "oklch(38% 0.03 355)", "oklch(52% 0.03 355)", "oklch(62% 0.03 355)", "oklch(74% 0.03 355)", "oklch(85% 0.02 355)", "oklch(95% 0.01 355)"] },
+      "destructive": { "role": "tertiary", "displayName": "Destructive", "canonical": "#b91c1c", "contrast": "6.5:1 on Paper", "tonalRamp": ["oklch(15% 0.08 27)", "oklch(26% 0.12 27)", "oklch(38% 0.15 27)", "oklch(50% 0.18 27)", "oklch(62% 0.18 27)", "oklch(74% 0.13 27)", "oklch(85% 0.08 27)", "oklch(95% 0.03 27)"] },
+      "destructive-night": { "role": "tertiary", "displayName": "Destructive Night", "canonical": "#f87171", "contrast": "7.2:1 on Night", "tonalRamp": ["oklch(15% 0.08 22)", "oklch(26% 0.12 22)", "oklch(38% 0.15 22)", "oklch(50% 0.18 22)", "oklch(62% 0.18 22)", "oklch(71% 0.17 22)", "oklch(85% 0.08 22)", "oklch(95% 0.03 22)"] },
+      "destructive-night-ink": { "role": "tertiary", "displayName": "Destructive Night Ink", "canonical": "#450a0a", "contrast": "5.8:1 on #f87171", "tonalRamp": ["oklch(15% 0.07 25)", "oklch(26% 0.09 25)", "oklch(38% 0.12 25)", "oklch(50% 0.15 25)", "oklch(62% 0.15 25)", "oklch(74% 0.1 25)", "oklch(85% 0.06 25)", "oklch(95% 0.02 25)"] }
+    },
+    "typographyMeta": {
+      "status": { "displayName": "Status", "purpose": "The daily status sentence beside the token; the page's type-led headline. CSS token --text-status." },
+      "headline": { "displayName": "Headline", "purpose": "Section headings (Ranking) and the large token numeral." },
+      "rank": { "displayName": "Rank", "purpose": "Row rank numeral, tabular; rank 1 in brand-ink, others in Smoke." },
+      "title": { "displayName": "Title", "purpose": "Game names in the ranking; empty-state headings at 600. CSS token --text-title." },
+      "body": { "displayName": "Body", "purpose": "Status detail line and empty-state explanations." },
+      "body-sm": { "displayName": "Body small", "purpose": "Countdown, counts, labels, buttons, messages, compact status sentence." },
+      "label": { "displayName": "Label", "purpose": "Compact bar countdown and the small token numeral." }
+    },
+    "shadows": [
+      { "name": "float", "value": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)", "purpose": "Bottom-pinned messages floating over the ranking." },
+      { "name": "overlay", "value": "shadcn stock shadow-md / shadow-lg", "purpose": "Dropdown menus and the remove-game dialog." }
+    ],
+    "motion": [
+      { "name": "token-flight", "value": "480ms cubic-bezier(0.16, 1, 0.3, 1), translate + scale from the visible available token", "purpose": "The one orchestrated motion: on vote, the token travels from the status to the voted row. Skipped under prefers-reduced-motion." },
+      { "name": "rank-reorder", "value": "420ms cubic-bezier(0.16, 1, 0.3, 1), FLIP translateY", "purpose": "Moved rows slide to their new rank after a vote. Skipped under prefers-reduced-motion." },
+      { "name": "arrival-cue", "value": "1600ms static 2px ring outline, 4px offset", "purpose": "Shows where focus landed after a vote change or jump to your vote; static, so no reduced-motion variant." },
+      { "name": "color-transition", "value": "150ms cubic-bezier(0.4, 0, 0.2, 1)", "purpose": "shadcn transition-colors on buttons." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px", "purpose": "Gutters 16px to 24px; status top 40px to 56px; row grid gains fixed 5.5rem count and 2.5rem menu columns, gap 8px to 12px. The single 42rem column holds at every width." }
+    ],
+    "layout": {
+      "column": "max-width 42rem, left-aligned content, centered in viewport; header, status bar and messages share it",
+      "scrollPaddingTop": "4.5rem (clears the fixed status bar; WCAG 2.4.11)",
+      "filterThreshold": "9 games"
+    }
+  },
+  "components": [
+    {
+      "name": "Action Token",
+      "kind": "custom",
+      "refersTo": "action-token",
+      "description": "Today's action as a physical token: available (beside the status), spent (dashed empty spot), placed (24px, beside Your vote).",
+      "html": "<div class=\"ds-tokens\"><span class=\"ds-token\" data-token=\"available\">1</span><span class=\"ds-token ds-token--spent\" data-token=\"spent\"></span><span class=\"ds-placed\"><span class=\"ds-token ds-token--sm\" data-token=\"placed\">1</span>Your vote</span></div>",
+      "css": ".ds-tokens { display: flex; align-items: center; gap: 24px; font-family: 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif; color: var(--foreground, #1d1418); } .ds-token { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 48px; height: 48px; border-radius: 9999px; border: 2px solid var(--brand-line, #420217); background: var(--token, #d0ff15); color: var(--token-foreground, #420217); font-size: 20px; line-height: 28px; font-weight: 700; font-variant-numeric: tabular-nums; } .ds-token--spent { background: transparent; border: 2px dashed var(--input, #8f7d83); } .ds-token--sm { width: 24px; height: 24px; font-size: 12px; line-height: 16px; } .ds-placed { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; }"
+    },
+    {
+      "name": "Today Status",
+      "kind": "custom",
+      "refersTo": "today-status",
+      "description": "The status sentence beside the token, detail, non-live countdown, with the suggest form inline while an action is available.",
+      "html": "<section class=\"ds-status\"><span class=\"ds-status-token\">1</span><div class=\"ds-status-body\"><h2 class=\"ds-status-sentence\">You have today's action.</h2><p class=\"ds-status-detail\">Vote for a game, or suggest one.</p><p class=\"ds-status-reset\">Resets at midnight (Sydney time), in 5 h 12 min.</p></div></section>",
+      "css": ".ds-status { display: flex; gap: 24px; font-family: 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif; color: var(--foreground, #1d1418); max-width: 42rem; } .ds-status-token { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; width: 48px; height: 48px; border-radius: 9999px; border: 2px solid var(--brand-line, #420217); background: var(--token, #d0ff15); color: var(--token-foreground, #420217); font-size: 20px; font-weight: 700; } .ds-status-body { min-width: 0; flex: 1; } .ds-status-sentence { margin: 0; font-size: 1.75rem; line-height: 1.2; font-weight: 600; letter-spacing: -0.025em; text-wrap: balance; } .ds-status-detail { margin: 8px 0 0; color: var(--muted-foreground, #6e5d63); } .ds-status-reset { margin: 4px 0 0; font-size: 14px; color: var(--muted-foreground, #6e5d63); }"
+    },
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Theme primary fill (claret light, Volt dark); the Suggest submit only.",
+      "html": "<button class=\"ds-btn-primary\">Suggest</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 44px; padding: 8px 20px; border: 0; border-radius: 6px; background: var(--primary, #420217); color: var(--primary-foreground, #ffffff); font: 500 14px/20px 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif; cursor: pointer; transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-btn-primary:hover { background: color-mix(in srgb, var(--primary, #420217) 90%, transparent); } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--background, #fff), 0 0 0 4px var(--ring, #420217); }"
+    },
+    {
+      "name": "Vote Button",
+      "kind": "button",
+      "refersTo": "button-vote",
+      "description": "Outline row action with an Edge outline; fills with primary on hover; hidden once today's action is used.",
+      "html": "<button class=\"ds-btn-vote\">Vote</button>",
+      "css": ".ds-btn-vote { display: inline-flex; align-items: center; justify-content: center; height: 40px; min-width: 80px; padding: 8px 16px; border: 1px solid var(--input, #8f7d83); border-radius: 6px; background: transparent; color: var(--foreground, #1d1418); font: 500 14px/20px 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif; cursor: pointer; transition: background-color 150ms, color 150ms, border-color 150ms; } .ds-btn-vote:hover { background: var(--primary, #420217); color: var(--primary-foreground, #fff); border-color: var(--primary, #420217); } .ds-btn-vote:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--background, #fff), 0 0 0 4px var(--ring, #420217); }"
+    },
+    {
+      "name": "Destructive Button",
+      "kind": "button",
+      "refersTo": "button-destructive",
+      "description": "Final confirmation in the remove-game dialog only.",
+      "html": "<button class=\"ds-btn-destructive\">Remove game</button>",
+      "css": ".ds-btn-destructive { display: inline-flex; align-items: center; justify-content: center; height: 40px; padding: 8px 16px; border: 0; border-radius: 6px; background: var(--destructive, #b91c1c); color: var(--destructive-foreground, #fff); font: 500 14px/20px 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif; cursor: pointer; } .ds-btn-destructive:hover { background: color-mix(in srgb, var(--destructive, #b91c1c) 90%, transparent); } .ds-btn-destructive:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--background, #fff), 0 0 0 4px var(--ring, #420217); }"
+    },
+    {
+      "name": "Suggest Field",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Label, then input and Suggest on one row, with a tabular 0/100 counter beneath.",
+      "html": "<form class=\"ds-suggest\"><label class=\"ds-suggest-label\" for=\"ds-name\">Suggest a game</label><div class=\"ds-suggest-row\"><input id=\"ds-name\" class=\"ds-input\" placeholder=\"e.g. Ticket to Ride\"><button class=\"ds-suggest-btn\" type=\"button\">Suggest</button></div><p class=\"ds-suggest-count\">0/100</p></form>",
+      "css": ".ds-suggest { font-family: 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif; color: var(--foreground, #1d1418); } .ds-suggest-label { font-size: 14px; font-weight: 500; } .ds-suggest-row { display: flex; gap: 8px; margin-top: 8px; } .ds-input { flex: 1; min-width: 0; height: 44px; padding: 8px 12px; border: 1px solid var(--input, #8f7d83); border-radius: 6px; background: var(--background, #fff); color: inherit; font: 400 14px 'Schibsted Grotesk', sans-serif; caret-color: var(--brand-line, #420217); } .ds-input::placeholder { color: var(--muted-foreground, #6e5d63); } .ds-input:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--background, #fff), 0 0 0 4px var(--ring, #420217); } .ds-suggest-btn { height: 44px; padding: 8px 20px; border: 0; border-radius: 6px; background: var(--primary, #420217); color: var(--primary-foreground, #fff); font: 500 14px 'Schibsted Grotesk', sans-serif; cursor: pointer; } .ds-suggest-btn:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--background, #fff), 0 0 0 4px var(--ring, #420217); } .ds-suggest-count { margin: 8px 0 0; text-align: right; font-size: 14px; font-variant-numeric: tabular-nums; color: var(--muted-foreground, #6e5d63); }"
+    },
+    {
+      "name": "Ranking Rows",
+      "kind": "custom",
+      "refersTo": "game-row",
+      "description": "Hairline-divided rank | name | action | count | menu grid; rank 1 in brand-ink; your vote marked by the placed token and words, no tint.",
+      "html": "<ol class=\"ds-rows\"><li class=\"ds-row\"><span class=\"ds-rank ds-rank--first\">1</span><div><p class=\"ds-name\">Ticket to Ride</p></div><button class=\"ds-row-btn ds-row-btn--vote\">Vote</button><span class=\"ds-count\">7 votes</span><button class=\"ds-menu\" aria-label=\"More actions\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"1\"/><circle cx=\"19\" cy=\"12\" r=\"1\"/><circle cx=\"5\" cy=\"12\" r=\"1\"/></svg></button></li><li class=\"ds-row\"><span class=\"ds-rank\">2</span><div><p class=\"ds-name\">Catan</p><span class=\"ds-mine\"><span class=\"ds-token-sm\">1</span>Your vote</span></div><button class=\"ds-row-btn\">Remove vote</button><span class=\"ds-count\">5 votes</span><button class=\"ds-menu\" aria-label=\"More actions\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"1\"/><circle cx=\"19\" cy=\"12\" r=\"1\"/><circle cx=\"5\" cy=\"12\" r=\"1\"/></svg></button></li></ol>",
+      "css": ".ds-rows { list-style: none; margin: 0; padding: 0; max-width: 42rem; font-family: 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif; color: var(--foreground, #1d1418); } .ds-row { display: grid; grid-template-columns: 3rem minmax(0, 1fr) auto 5.5rem 2.5rem; align-items: center; column-gap: 12px; padding: 16px 0; } .ds-row + .ds-row { border-top: 1px solid var(--border, #ece4e6); } .ds-rank { font-size: 24px; line-height: 32px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--muted-foreground, #6e5d63); } .ds-rank--first { color: var(--brand-ink, #420217); } .ds-name { margin: 0; font-size: 1.0625rem; line-height: 1.4; font-weight: 500; overflow-wrap: anywhere; } .ds-mine { display: inline-flex; align-items: center; gap: 6px; margin-top: 4px; font-size: 14px; font-weight: 500; } .ds-token-sm { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 9999px; border: 2px solid var(--brand-line, #420217); background: var(--token, #d0ff15); color: var(--token-foreground, #420217); font-size: 12px; font-weight: 700; } .ds-count { text-align: right; font-size: 14px; font-variant-numeric: tabular-nums; } .ds-menu { display: grid; place-items: center; width: 40px; height: 40px; border: 0; border-radius: 6px; background: transparent; color: inherit; cursor: pointer; } .ds-menu:hover { background: var(--accent, #f6f1f2); } .ds-row-btn { height: 40px; padding: 8px 16px; border: 1px solid var(--input, #8f7d83); border-radius: 6px; background: transparent; color: inherit; font: 500 14px 'Schibsted Grotesk', sans-serif; cursor: pointer; } .ds-row-btn--vote { min-width: 80px; } .ds-row-btn--vote:hover { background: var(--primary, #420217); color: var(--primary-foreground, #fff); border-color: var(--primary, #420217); } .ds-row-btn:focus-visible, .ds-menu:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--background, #fff), 0 0 0 4px var(--ring, #420217); }"
+    },
+    {
+      "name": "Status Bar",
+      "kind": "nav",
+      "refersTo": "status-bar",
+      "description": "Compact fixed bar shown once the status scrolls out of view: small token, sentence, tabular countdown; hairline below, no shadow.",
+      "html": "<div class=\"ds-bar\"><div class=\"ds-bar-inner\"><span class=\"ds-bar-token\"></span><p class=\"ds-bar-text\">Your action today went to <button class=\"ds-bar-link\">“Catan”</button>.</p><p class=\"ds-bar-time\">5 h 12 min</p></div></div>",
+      "css": ".ds-bar { background: var(--background, #fff); border-bottom: 1px solid var(--border, #ece4e6); font-family: 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif; color: var(--foreground, #1d1418); } .ds-bar-inner { display: flex; align-items: center; gap: 12px; max-width: 42rem; margin: 0 auto; padding: 10px 16px; } .ds-bar-token { width: 24px; height: 24px; flex-shrink: 0; border-radius: 9999px; border: 2px dashed var(--input, #8f7d83); } .ds-bar-text { flex: 1; min-width: 0; margin: 0; font-size: 14px; font-weight: 600; } .ds-bar-link { border: 0; padding: 0; background: none; font: inherit; color: inherit; cursor: pointer; text-decoration: underline 2px var(--brand-line, #420217); text-underline-offset: 4px; } .ds-bar-link:focus-visible { outline: 2px solid var(--ring, #420217); outline-offset: 2px; } .ds-bar-time { margin: 0; flex-shrink: 0; font-size: 12px; font-variant-numeric: tabular-nums; color: var(--muted-foreground, #6e5d63); }"
+    },
+    {
+      "name": "Flash Message",
+      "kind": "custom",
+      "refersTo": "flash-message",
+      "description": "Bottom-pinned, dismissible, never auto-clearing message; the only in-page element with a shadow.",
+      "html": "<div class=\"ds-flash\"><svg class=\"ds-flash-icon\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"m9 12 2 2 4-4\"/></svg><p>Your vote went to “Catan”.</p><button class=\"ds-flash-x\" aria-label=\"Dismiss message\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" aria-hidden=\"true\"><path d=\"M18 6 6 18\"/><path d=\"m6 6 12 12\"/></svg></button></div>",
+      "css": ".ds-flash { display: flex; align-items: flex-start; gap: 8px; max-width: 42rem; padding: 4px 4px 4px 16px; border: 1px solid var(--border, #ece4e6); border-radius: 8px; background: var(--card, #fff); color: var(--foreground, #1d1418); font: 500 14px/20px 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); } .ds-flash-icon { margin-top: 10px; flex-shrink: 0; color: var(--secondary-ink, #536608); } .ds-flash p { flex: 1; margin: 0; padding: 8px 0; } .ds-flash-x { display: grid; place-items: center; width: 36px; height: 36px; border: 0; border-radius: 6px; background: transparent; color: inherit; cursor: pointer; } .ds-flash-x:hover { background: var(--accent, #f6f1f2); } .ds-flash-x:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--background, #fff), 0 0 0 4px var(--ring, #420217); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Daily Token",
+    "overview": "Today's action is a physical game token: a Volt disc with a claret \"1\" on it. It is the only bold object on the page. While the action is available it sits beside the status sentence; once used, the status keeps only its dashed empty spot; a vote places it on the row it went to, with the words \"Your vote\" beside it. When you vote, the token travels from the status to that row. Everything else is quiet: one left-aligned column of type and hairlines, with no cards, no tinted rows, no badges and no dashboard panels.\n\nThe page is type-led. Where you stand today is a 28px sentence (\"You have today's action.\", \"Your action today went to \"Catan\".\"), not a filled panel, and the suggest field sits inline under it. The ranking below is a plain hairline-divided list with large tabular rank numerals. The density is that of a working list: one row per game, counts in a fixed right-hand column, actions that disappear rather than disable once today's action is used.\n\nThe neutrals carry the brand quietly. Light theme is Paper with claret-tinted greys; dark theme is a claret Night, never neutral black. Claret (#420217) and Volt (#D0FF15) are kept exact and swap leading roles by theme, because each is about 1.2:1 against a ground of similar lightness. Accessibility to WCAG 2.2 AA is a hard floor, and contrast ratios are recorded as comments beside each token in `resources/css/app.css`.",
+    "keyCharacteristics": [
+      "One bold object, the Volt action token, in three states (available, spent, placed).",
+      "A single left-aligned 42rem column on every screen size, header aligned to it.",
+      "Status as a 28px sentence, not a panel; suggest field inline beneath it.",
+      "Hairline-divided ranking rows; no cards, tints or badges.",
+      "Claret-tinted neutrals in both themes; dark ground is claret Night.",
+      "Schibsted Grotesk throughout, tabular numerals for every rank, count and countdown.",
+      "One orchestrated motion (the token flight) plus a rank-reorder slide, both skipped under reduced motion."
+    ],
+    "rules": [
+      { "name": "The Same-Lightness Rule", "body": "Neither brand color is ever text or a line on a ground of similar lightness: no Volt on Paper, no claret on Night. Use `brand-line`, `brand-ink` or `secondary-ink`, which resolve to the safe color per theme.", "section": "colors" },
+      { "name": "The Role Swap Rule", "body": "Write against semantic roles (`primary`, `secondary`, `token`, `brand-line`, `brand-ink`, `secondary-ink`), never raw hex. The theme decides which brand color plays which role; only `token` is constant.", "section": "colors" },
+      { "name": "The One Bold Object Rule", "body": "Volt as a fill belongs to the token (and, in dark theme, the primary button). No other surface, row or panel is filled or tinted with a brand color.", "section": "colors" },
+      { "name": "The Edge Rule", "body": "A line that identifies a control uses Edge (3:1 or better); Hairline is for decorative division only.", "section": "colors" },
+      { "name": "The Tabular Rule", "body": "Every rank, vote count, game count, character counter and countdown uses tabular numerals.", "section": "typography" },
+      { "name": "The Sentence Status Rule", "body": "Where you stand today is written as a sentence at Status size, not a label-plus-value panel.", "section": "typography" },
+      { "name": "The Floats-Only Rule", "body": "A shadow means \"this sits above scrolling content\". Rows, the status, empty states and the status bar never get one.", "section": "elevation" }
+    ],
+    "dos": [
+      "**Do** route brand colors through `primary`, `secondary`, `token`, `brand-line`, `brand-ink` and `secondary-ink` so they swap correctly between themes.",
+      "**Do** keep the token as the only bold object: Volt fill, claret \"1\", 2px `brand-line` edge, in available, spent and placed states.",
+      "**Do** write today's status as a sentence at Status size (1.75rem) beside the token.",
+      "**Do** keep everything in one left-aligned 42rem column, header included, on every screen size.",
+      "**Do** divide rows and bound empty states with hairlines, and outline controls with Edge (3:1 or better).",
+      "**Do** keep vote buttons outline (40px, min 80px wide) and hide them once today's action is used.",
+      "**Do** use tabular numerals and a fixed right-hand count column; use competition ranking (1, 2, 2, 4) for ties.",
+      "**Do** pin messages to the bottom of the screen, dismissible, never auto-clearing, with both live regions always mounted.",
+      "**Do** skip the token flight and rank slide under `prefers-reduced-motion`; static cues such as the 1.6s arrival outline need no variant.",
+      "**Do** record a contrast ratio beside any new color token and hold every pairing to WCAG 2.2 AA."
+    ],
+    "donts": [
+      "**Don't** use Volt as text or a line on Paper, or claret on Night (about 1.2:1).",
+      "**Don't** fill or tint rows, panels or the status with a brand color; no cards, badges or dashboard panels.",
+      "**Don't** use a neutral black or grey ground in dark theme; the ground is claret Night.",
+      "**Don't** show rows of disabled Vote buttons once today's action is used.",
+      "**Don't** add shadows to rows, the status, the status bar or empty states.",
+      "**Don't** add a second typeface.",
+      "**Don't** announce the countdown; only the status sentence and its detail are live."
+    ]
+  }
+}

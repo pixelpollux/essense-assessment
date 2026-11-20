@@ -23,9 +23,28 @@ class RegistrationTest extends TestCase
             'email' => 'test@example.com',
             'password' => 'password',
             'password_confirmation' => 'password',
+            'timezone' => 'Australia/Sydney',
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(route('dashboard', absolute: false));
+        $response->assertRedirect(route('games.index', absolute: false));
+        $this->assertDatabaseHas('users', [
+            'email' => 'test@example.com',
+            'timezone' => 'Australia/Sydney',
+        ]);
+    }
+
+    public function test_registration_rejects_an_invalid_timezone()
+    {
+        $response = $this->post('/register', [
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'password' => 'password',
+            'password_confirmation' => 'password',
+            'timezone' => 'Mars/Olympus_Mons',
+        ]);
+
+        $response->assertSessionHasErrors('timezone');
+        $this->assertGuest();
     }
 }

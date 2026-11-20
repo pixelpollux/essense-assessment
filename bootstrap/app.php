@@ -1,6 +1,12 @@
 <?php
 
+use App\Exceptions\RenderUserFacingErrors;
 use App\Http\Middleware\HandleInertiaRequests;
+use App\Services\Essense\Exceptions\EssenseMisconfigured;
+use App\Services\Essense\Exceptions\EssenseUnavailable;
+use App\Services\Essense\Exceptions\GameNotFound;
+use App\Services\Library\Exceptions\LibraryRuleViolation;
+use Illuminate\Contracts\Cache\LockTimeoutException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -19,5 +25,15 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->render(new RenderUserFacingErrors);
+
+        // Expected outcomes, not errors: don't fill the log with them. The Essense client already
+        // logs its own failures (warning / critical) with context and without secrets.
+        $exceptions->dontReport([
+            LibraryRuleViolation::class,
+            GameNotFound::class,
+            EssenseUnavailable::class,
+            EssenseMisconfigured::class,
+            LockTimeoutException::class,
+        ]);
     })->create();

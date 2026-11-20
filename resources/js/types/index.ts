@@ -21,10 +21,15 @@ export interface NavItem {
     isActive?: boolean;
 }
 
+export interface Flash {
+    success: string | null;
+    error: string | null;
+}
+
 export interface SharedData {
     name: string;
-    quote: { message: string; author: string };
     auth: Auth;
+    flash: Flash;
     [key: string]: unknown;
 }
 
@@ -34,6 +39,7 @@ export interface User {
     email: string;
     avatar?: string;
     email_verified_at: string | null;
+    timezone: string;
     created_at: string;
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
