@@ -84,6 +84,9 @@ The developer is a senior frontend-focused full-stack engineer (React/TS, a11y, 
    match `/games/list`. There's also an artisan `games:reset` command that flushes the API first, then clears `votes` and
    `daily_actions` in one transaction (if the flush fails, nothing local changes). It keeps user accounts and asks before
    running in production (`--force` skips it).
+   **Changes made outside the app** (a flush from the docs page, a different API key, a removal directly in the API)
+   are reconciled whenever the list loads: votes for games that are gone are deleted, and *today's* actions on them are
+   refunded as `game_removed`. Only after a successful list; adds in progress (no game ID yet) are skipped.
 6. **Rule semantics:**
    - Undoing an action on the same day refunds it: removing your vote the same day you cast it gives back today's action.
    - One active vote per user per game (unique index). No piling votes onto the same game across days.
@@ -99,7 +102,7 @@ The developer is a senior frontend-focused full-stack engineer (React/TS, a11y, 
    - **The status line is computed from that row:** no row means "1 action left today"; an active row means
      "Today's action used: …"; a row refunded for `game_removed` means "*X* was removed, so today's vote was given back"
      (in an `aria-live` region); a row refunded for `withdrawn` just means "1 action left today".
-     Not refunded: votes from earlier days, and removals made outside the app (the leftover rows are ignored, see 5).
+     Not refunded: actions from earlier days. Games that vanish outside the app are refunded on the next list load (see 5).
    - **A vote stays active across days** until you remove it: voting again for the same game on a later day is rejected
      (`AlreadyVoted`) and doesn't use the day's action. **The UI must make "you voted for this" obvious on each game, and
      show how to remove the vote.**
