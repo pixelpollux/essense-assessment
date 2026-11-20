@@ -105,7 +105,7 @@ class GamesResetCommandTest extends TestCase
         $this->api->failNext('flushGames', EssenseUnavailable::serverError('/cache/flush', 503));
 
         $this->artisan('games:reset')
-            ->expectsOutputToContain('Could not reach the Essense API, so nothing was changed')
+            ->expectsOutputToContain('Could not confirm the reset')
             ->assertFailed();
 
         $this->assertSame(2, Vote::count());
