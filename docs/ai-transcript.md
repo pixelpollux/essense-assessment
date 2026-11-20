@@ -4794,11 +4794,391 @@ Only structure and counts get printed, no message contents:
 
 ### Claude <sub>2026-11-20 04:09 UTC</sub>
 
-<details><summary>Tool calls (4)</summary>
+<details><summary>Tool calls (7)</summary>
 
 - Bash: Add path redaction to builder and verifier
 - Bash: Rebuild with shortened paths and recheck
 - Bash: Find any remaining mention of the username
 - Bash: Redact the pasted prompt username; rebuild and verify
+- Bash: Commit the transcript on its own branch and push
+- Write: `~/.claude/projects/<project>/memory/final-polish-backlog.md`
+- Write: `~/.claude/projects/<project>/memory/MEMORY.md`
+
+</details>
+The transcript is built from the raw session file and pushed on its own branch, `docs/ai-transcript` (`7f45571`). It's ready to review.
+
+**What it contains:**
+- **It starts from your very first message,** "before writing any code, create a CLAUDE.md…".
+- **All 52 of your messages and all 187 of my reply blocks, in full.** A script checked this against the raw session file rather than me eyeballing it.
+- **11 multiple-choice questions shown with your answers,** because those were your decisions at those points.
+- **All 5 subagent reports,** three design-review rounds and two documenter runs, labelled as agent output, not you. The first build missed 3 of them, because they were stored differently in the session file; the check caught it.
+- **154 collapsed lists of tool calls,** one line per call. Raw tool output is left out, because it runs to megabytes and could contain secrets.
+- **Left out entirely:** my internal reasoning, the skill instruction text (replaced by a one-line note), and image context from my own screenshot checks.
+
+**Privacy:**
+- The API key, the `APP_KEY` and your email are **absent** (checked).
+- Local paths are shortened as you chose, so your username doesn't appear anywhere.
+- The only change to anything you wrote is the pasted shell prompt, `<username> @ …`, now `user @ …`.
+
+**It's a snapshot as of now.** This conversation continues, so the plan is:
+1. Merge the `chore/copilot-comments` PR into `dev`. It has the review fixes and the lock-test fix, and must go in first or CI fails on `main`.
+2. Open and merge the `dev` → `main` PR, using a merge commit.
+3. I run the fresh-clone check on `main`.
+4. **Last of all,** I regenerate the transcript from the full session, re-run every check, update `docs/ai-transcript`, and it goes to `main` through `dev`.
+
+I've saved these steps and all the transcript rules to memory, so they survive if the last step happens in a new session.
+
+PR text for the transcript branch, for when you're ready, though I'd hold it until step 4:
+
+**Title:** `Add the AI chat transcript`
+
+```markdown
+## Summary
+Adds `docs/ai-transcript.md`, the complete conversation with Claude Code that built this project, as the brief requires. The README already links to it.
+
+## How it was made
+`/export` wasn't available in this chat, so it was built from the raw session log.
+- **Included:** every developer message and every Claude reply, in full and in order from the first message; multiple-choice questions with the developer's answers; subagent reports (the design reviewer and the documenter), labelled; and a one-line summary of each tool call, in collapsed sections.
+- **Left out:** raw tool output (megabytes, with a secrets risk), Claude's internal reasoning, and injected skill instruction text (shown as a one-line note).
+
+## Verified against the session log
+- 52/52 developer messages, 187/187 reply blocks and 5/5 subagent reports present.
+- The Essense API key, the app key and the developer's email are absent.
+- Local paths are shortened (repo-relative, `~`, `<scratchpad>`) so the username isn't exposed.
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+```
+
+---
+
+### You <sub>2026-11-20 04:16 UTC</sub>
+
+now that everything is all merged into main, i'm getting an invalid_key error
+
+```
+[server]
+[logs] ┌ 04:16:12 CRITICAL ───────────────────────────────────────────────────────────┐
+[logs] │ Essense API misconfigured                                                    │
+[logs] └ GET: / • Auth ID: 4 (<email redacted>) • path: /games/list • reason: INVALID_KEY ┘
+[server]   2026-11-19 22:16:12 / .......................................... ~ 502.33ms
+[server]   2026-11-19 22:16:12 /.well-known/appspecific/com.chrome.devtools.json  ~ 0.02ms
+[server]   2026-11-19 22:16:13 /.well-known/appspecific/com.chrome.devtools.json  ~ 0.09ms
+[server]   2026-11-19 22:16:13 /favicon.ico ................................. ~ 0.03ms
+[vite] 10:16:19 PM [vite] .env changed, restarting server...
+[vite] 10:16:19 PM [vite] server restarted.
+[vite] 
+[vite]   LARAVEL v12.73.0  plugin v1.2.0
+[vite] 
+[vite]   ➜  APP_URL: http://localhost
+[server] 
+[server]    INFO  Environment modified. Restarting server...  
+[server] 
+[server]    INFO  Server running on [http://127.0.0.1:8000].  
+[server] 
+[server]   Press Ctrl+C to stop the server
+[server] 
+[logs] ┌ 04:16:21 CRITICAL ───────────────────────────────────────────────────────────┐
+[logs] │ Essense API misconfigured                                                    │
+[logs] └ GET: / • Auth ID: 4 (<email redacted>) • path: /games/list • reason: INVALID_KEY ┘
+[server]   2026-11-19 22:16:20 / .......................................... ~ 503.38ms
+[server]   2026-11-19 22:16:20 /.well-known/appspecific/com.chrome.devtools.json  ~ 503.63ms
+[server]   2026-11-19 22:16:21 /favicon.ico ................................. ~ 0.02ms
+[server]   2026-11-19 22:16:21 /.well-known/appspecific/com.chrome.devtools.json  ~ 0.02ms
+
+```
+
+---
+
+### Claude <sub>2026-11-20 04:16 UTC</sub>
+
+Two things are going on here, and the second one matters for the submission.
+
+1. **The error:** `INVALID_KEY` means the Essense API rejected the key the app sent. I'll find out whether the key itself is bad, or whether the app is sending something different from what's in your `.env`.
+2. **Your email is in that log output:** `<email redacted>`. Laravel's log viewer (Pail) adds the logged-in user's email to every log line. Because you pasted it here, **it's now in this conversation, and so in the transcript I'll regenerate.** It's a different address from the one I've been checking for, so I'll add it to the redaction rules and the secret checks before the transcript is regenerated.
+
+Diagnosing without printing the key. The `.env` changed at 22:16:19, and the error happened again after the restart, so first I'll check whether the app is even reading `.env`:
+
+<details><summary>Tool calls (3)</summary>
+
+- Bash: Check config cache and key without printing it
+- Bash: Test the key directly against the API
+- Bash: Add the email to transcript redaction and checks
+
+</details>
+Redaction is confirmed working: the log line now reads `Auth ID: 4 (<email redacted>)`. I'll add this to the saved transcript rules too, in case the final regeneration happens in a later session:
+
+<details><summary>Tool calls (1)</summary>
+
+- Edit: `~/.claude/projects/<project>/memory/final-polish-backlog.md`
+
+</details>
+The app is working correctly; the API is rejecting your key itself. Calling the API directly with `curl`, outside the app, gets `403 INVALID_KEY`, and `essense:ping` reports the same, while the API's health check returns 200. Your `.env` is read correctly, with no cached config and no stray characters around the 32-character key. The first error also came before you edited `.env`, so the edit didn't cause it.
+
+**Fix:**
+1. Get a fresh key from <https://codechallenge.essensedesigns.info/api-key> and don't refresh the docs page afterwards.
+2. Put it in `.env` as `ESSENSE_API_KEY=…`.
+3. Run `php artisan essense:ping` to check it.
+
+Games are stored per key, so the new key starts with an empty library and your "zelda" won't carry over. Local votes left from the old key are ignored automatically, or you can clear them with `php artisan games:reset`.
+
+**Question for you:** did you open or refresh the docs page, or visit `/api-key`, since the key last worked? I suspect generating a new key revokes the old one, but we never tested that. If so, it's worth a line in `docs/api-notes.md`.
+
+**Your email was in that log:** the log viewer prints the logged-in user's email on every line, so `<email redacted>` is now in this conversation. It's a different address from the one I'd been checking for. The transcript build now replaces it with `<email redacted>` and the verifier checks for it, so it won't reach the public transcript. The committed snapshot was made before this message, so it doesn't contain it.
+
+Once you have a new key, I'll run the fresh-clone check on `main`, then regenerate the transcript as the final step.
+
+---
+
+### You <sub>2026-11-20 04:26 UTC</sub>
+
+new key working
+
+---
+
+### Claude <sub>2026-11-20 04:26 UTC</sub>
+
+Good. Now the **fresh-clone check on `main`**, exactly as a reviewer would do it. First, confirming `main` really has everything:
+
+<details><summary>Tool calls (2)</summary>
+
+- Bash: Confirm main has all merged work; list current games
+- Bash: Clone main and follow the README setup steps
+
+</details>
+Clone of `main` at `85cd24b`, key set, and port 18000 because your `composer dev` is on 8000. Now `docker-compose up` with no build cache, timed, the way a reviewer's first run would be:
+
+<details><summary>Tool calls (9)</summary>
+
+- Bash: Build without cache, start, check health and routes
+- Write: `<scratchpad>/fresh-flow.mjs`
+- Bash: Run the full user flow against the fresh clone
+- Bash: Probe the Your vote label's real text
+- Bash: Fix the selector and rerun the full flow
+- Bash: Run CI-style install, build, tests and lint on the clone
+- Bash: Confirm the cause of the HTTP test failures
+- Bash: Generate the app key and rerun the suite on the clone
+- Bash: Tear down the clone check and confirm clean state
+
+</details>
+The fresh-clone check of `main` passed. I cloned it from GitHub and followed the README exactly: `cp .env.example .env`, add the key, `docker-compose up`. The only change was port 18000 instead of 8000, because your `composer dev` was using 8000; that's the README's documented `APP_PORT` override.
+
+| Check | Result |
+|---|---|
+| Build without cache | ✅ 12s; the container is healthy, all 6 migrations ran |
+| `essense:ping` in the container | ✅ "The key works; the library has 0 games" |
+| Login, register, the home redirect, `/up` | ✅ |
+| Full flow in a browser, two users, real API | ✅ 14/14 |
+| Test suite on the clone, run as CI runs it | ✅ 124/124 |
+| Lint job checks (Pint, Prettier, ESLint, `tsc`) | ✅ all clean |
+
+The browser flow covered every requirement in the brief:
+- the empty state, and the timezone detected as Sydney
+- suggesting a game, with extra spaces collapsed
+- a duplicate rejected regardless of case and spacing, on a phone-sized screen
+- voting; removing the vote, which gives the action back; voting again
+- the remove confirmation showing "1 vote"
+- removing the game, and the voter told their action came back
+- no console errors
+
+**Two failures along the way were in my checks, not the app:**
+1. **"Your vote" not found:** the token's hidden "1" sits in the same element, so its text is "1Your vote" and an exact match missed it. I confirmed this in the browser before changing the check; the label shows correctly, and screen readers hear "Your vote".
+2. **40 test failures:** I'd skipped `key:generate` on the clone. CI runs that step, and so do the README's local-development steps. With it, all 124 pass.
+
+**Cleanup:** the clone (which held your key), its containers and its volume are all removed, and your new key's library is empty again.
+
+**One optional improvement:** a reviewer who uses Docker and then runs `php artisan test` straight away, without the local-development steps, would hit the same `MissingAppKeyException` I did. Adding a fixed, non-secret test key to `phpunit.xml` would make `php artisan test` work right after cloning. It's a one-line change, but it would mean another small PR into `main`. Want it, or leave it?
+
+The only step left is **regenerating the transcript**. Tell me when you've finished everything else and I'll regenerate it, run all the checks (both email addresses included), and update `docs/ai-transcript.md`.
+
+---
+
+### You <sub>2026-11-20 04:30 UTC</sub>
+
+no, the reviewer will generate their own key at time of testing
+
+---
+
+### Claude <sub>2026-11-20 04:30 UTC</sub>
+
+Understood, I'll leave `phpunit.xml` as it is. One clarification so nothing surprises a reviewer: the missing key in that failure was **Laravel's own `APP_KEY`** (it encrypts sessions and cookies), not the Essense API key, so a reviewer generating an Essense key won't avoid it. It's already covered, though: the README's local-development steps include `php artisan key:generate` before anything else, and Docker generates `APP_KEY` itself. So leaving it is fine.
+
+That leaves only the transcript. Should I regenerate it now, or is there anything else first?
+
+---
+
+### You <sub>2026-11-20 04:35 UTC</sub>
+
+bug: zelda is still held as my vote even though the cache has been flushed and the api key reset. i would think it should empty entirely when flushed
+
+---
+
+### Claude <sub>2026-11-20 04:35 UTC</sub>
+
+I'll look at what's actually in your local database before deciding anything. The behaviour you describe depends on which local rows survived the key change:
+
+<details><summary>Tool calls (1)</summary>
+
+- Bash: Show local votes, daily actions and status
+
+</details>
+Bug confirmed:
+
+| Where | What's there |
+|---|---|
+| **The API** (new key) | **no games** |
+| `votes` (local) | your vote for **"zelda" #19** |
+| `daily_actions` (local) | two rows for "zelda" #19: one account's **add** and another's **vote**, both today (Chicago time), not refunded |
+| **Status** for both accounts | "action used" on zelda, so **neither of you can act again today** |
+
+**Why it happens.** Decision 5 made leftover rows *harmless in the list*: the vote row doesn't count, because no game #19 "zelda" exists any more. But **today's daily-action row never gets that check.** The status line and the daily limit read `daily_actions` directly, so a game that vanished outside the app, through a new key or a flush from the docs page, keeps blocking you for the rest of the day. In-app removal and `games:reset` both clean up properly; changes made *outside* the app don't. `CLAUDE.md` even lists "removals made outside the app aren't refunded", and in practice that meant being stuck.
+
+**Unblocking you right now:** `php artisan games:reset --force` clears both local tables. The API side is already empty, so it changes nothing there.
+
+## Proposed fix: reconcile against the API whenever the list loads
+
+The page already fetches `/games/list` on every load, so `GameLibrary::games()` can tidy local state against it at no extra API cost:
+1. **Delete local votes** whose game ID+name is no longer in the API list.
+2. **Refund today's actions** that point at a missing game, with reason `game_removed`. The status then says "*zelda* was removed, so your action came back", exactly as when someone removes a game in the app.
+
+**Guards, so it can't refund or delete wrongly:**
+- It **only runs after a successful list.** If the API is down or rejects the key, nothing is touched. That matters here: with a bad key, everything would look "missing".
+- It **skips adds in progress.** An add's daily row has no game ID until the API returns one, so it's ignored until then.
+- It **only refunds today's rows** (in each user's own timezone), like in-app removal. Older rows just have their votes deleted.
+- It runs in one short transaction, after the HTTP call, never during it.
+
+**Tests** (fake API, real tables):
+- a flushed API refunds today's vote and add and deletes the vote rows
+- yesterday's actions are left alone
+- an in-progress add, with no game ID yet, isn't refunded
+- an API failure changes nothing
+- an ID reused by a different game after a flush is treated as missing
+- the refunded user can act again
+
+Plus a browser check reproducing your exact case. `CLAUDE.md` decision 5 and the README's "Known limitations" get updated to match.
+
+This changes a recorded decision (outside removals *will* now be refunded), so I'd like your OK. Since `dev` and `main` are identical, I'd do it on a fresh branch from `dev`, then it goes `dev` → `main`, then the transcript last. Go ahead?
+
+---
+
+### You <sub>2026-11-20 04:39 UTC</sub>
+
+go ahead with that plan
+
+---
+
+### Claude <sub>2026-11-20 04:39 UTC</sub>
+
+Going ahead. Fresh branch from `dev`, and the **tests first**, so they describe the rules before any code exists:
+
+<details><summary>Tool calls (1)</summary>
+
+- Bash: Create a fix branch from dev; locate test sections
+
+</details>
+`dev` is at `579764b`. (`main` additionally has the transcript, which you merged straight into it; that's fine.) Adding a new test section before the "Daily status" tests:
+
+<details><summary>Tool calls (17)</summary>
+
+- Write: `<scratchpad>/reconcile-tests.php`
+- Bash: Insert the tests and run them before the fix
+- Bash: Read the games() method
+- Bash: Locate and print games()
+- Edit: `app/Services/Library/GameLibrary.php`
+- Edit: `app/Services/Library/GameLibrary.php`
+- Edit: `app/Services/Library/GameLibrary.php`
+- Bash: Run the library tests and the full suite
+- Write: `<scratchpad>/mutate-reconcile.sh`
+- Bash: Run three mutations; confirm the file is restored
+- Bash: Seed demo data, then remove a voted game outside the app
+- Bash: Start local server for the reconcile check
+- Write: `<scratchpad>/reconcile-check.mjs`
+- Bash: Reproduce the bug in a browser; check user's own rows
+- Bash: Clean up demo data; find docs to update
+- Bash: Read the passages to update
+- Bash: Update CLAUDE.md and README for the new behaviour
+
+</details>
+The README also says "122 tests", which was stale even before this fix. The suite is now 130, so I'll correct it and mention the new reconcile tests:
+
+<details><summary>Tool calls (2)</summary>
+
+- Bash: Correct the test count; rerun checks
+- Bash: Commit the fix and docs, push the branch
+
+</details>
+Fixed, and pushed on `fix/reconcile-outside-changes` as two commits. All 130 tests pass and `pint` is clean.
+
+**The fix:** every time the game list loads, the app tidies local data against what the API actually returned:
+- votes for games that no longer exist are deleted
+- **today's** actions on them are refunded, with "*X* was removed, so your action came back"
+
+It only does this after a **successful** list, so an outage or a bad key never looks like "every game was removed". It also leaves adds that are still in progress and earlier days' actions alone, and only writes to the database when something is actually stale.
+
+**Checked:**
+- 6 new tests. The 4 for the new behaviour failed before the fix; the 2 guard tests passed before and after, as intended.
+- 3 deliberate bugs (refunding every day, matching on ID only, reconciling after a failed list), each caught.
+- Your exact case reproduced in a browser, with a game deleted directly in the API: the reload says the action came back, and voting works straight away.
+
+**Your local data is already fixed:** that browser check was the first page load on this branch, and reconciliation applies to every account, so your two stuck "zelda" rows are refunded and the leftover vote is gone. The demo data is removed and the server is stopped.
+
+**Docs:** `CLAUDE.md` decisions 5 and 6 and the README (decisions, known limitations, and the test count, which said 122 and is now 130) all describe the new behaviour.
+
+PR link: https://github.com/pixelpollux/essense-assessment/compare/dev...fix/reconcile-outside-changes?expand=1
+
+**Title:** `Reconcile with games removed outside the app`
+
+**Description:**
+
+```markdown
+## Summary
+Fixes users getting stuck for the rest of the day when their game disappears outside the app.
+
+## The bug
+A flush from the API's docs page, a different API key, or a removal made directly in the API left local rows behind. The game list already ignored them (it matches on ID + name), but **today's daily action kept blocking its user until midnight**. After switching API keys, two accounts stayed on "Your action today went to 'zelda'" for a game that no longer existed, unable to vote or suggest.
+
+## The fix
+Each time the list loads, `GameLibrary` reconciles local data against the list it just fetched:
+- votes for games that are gone are deleted
+- **today's** actions on them are refunded as `game_removed`, the same as an in-app removal, so the status explains it: "*X* was removed, so your action came back."
+
+**Guards:**
+- It only runs after a **successful** list, so an API outage or a rejected key never looks like "every game was removed".
+- Adds still in progress (no game ID yet) are skipped.
+- Earlier days' actions are left alone.
+- It writes only when something is stale.
+- No transaction is held open during the HTTP call. Refunds use a conditional update, so they can't overwrite a concurrent in-app removal's refund.
+
+## Testing
+- **130 tests pass**, 6 of them new: refunds and dropped votes after a flush; acting again the same day; earlier days untouched; an ID reused by a different game counts as gone; an add in progress isn't refunded; nothing changes when the list fails. The 4 behaviour tests failed before the fix.
+- **The tests catch real bugs.** Three were introduced on purpose: refunding every day's actions, matching on ID only, and reconciling after a failed list. Each made a test fail.
+- **Reproduced in a browser:** a voted-for game was deleted directly in the API; on reload the status said the action came back, and voting worked straight away.
+
+## Docs
+`CLAUDE.md` decisions 5 and 6, plus the README's decisions, known limitations and test count.
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+```
+
+After that, the remaining steps are: merge this into `dev`, then `dev` into `main` (with a merge commit), and finally regenerate the transcript as the last step.
+
+---
+
+### You <sub>2026-11-20 04:50 UTC</sub>
+
+now on the branch `docs/ai-transcript`, regenerate ai transcript
+
+---
+
+### Claude <sub>2026-11-20 04:50 UTC</sub>
+
+I'll switch to `docs/ai-transcript` and bring it up to date. You merged it into `main` earlier, so it may be behind.
+
+<details><summary>Tool calls (5)</summary>
+
+- Bash: Switch to and update the transcript branch
+- Bash: Regenerate the transcript and run the verifier
+- Bash: Pattern-scan the transcript for secrets and recency
+- Bash: Locate the remaining username mention
+- Bash: Add the general rule; rebuild; rerun all checks
 
 </details>
