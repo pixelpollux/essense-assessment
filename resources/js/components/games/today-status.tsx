@@ -21,7 +21,10 @@ function useResetClock(resetsAt: string): number {
 
     useEffect(() => {
         const tick = setInterval(() => setNow(Date.now()), 60_000);
-        const reload = setTimeout(() => router.reload({ only: ['status', 'games'] }), Math.max(0, new Date(resetsAt).getTime() - Date.now()) + 1_000);
+        const reload = setTimeout(
+            () => router.reload({ only: ['status', 'games', 'loadError'] }),
+            Math.max(0, new Date(resetsAt).getTime() - Date.now()) + 1_000,
+        );
 
         return () => {
             clearInterval(tick);

@@ -63,7 +63,7 @@ export function SuggestGameForm({ canAct, initialName = '', autoFocus = false, o
                 </Button>
             </div>
             <div className="mt-2 flex items-start justify-between gap-3">
-                <div className="min-w-0">
+                <div className="min-w-0" aria-live="polite" aria-atomic="true">
                     <InputError id="name-error" message={form.errors.name} />
                 </div>
                 <p id="name-count" className={cn('text-sm tabular-nums', nearLimit ? 'text-foreground font-medium' : 'text-muted-foreground')}>

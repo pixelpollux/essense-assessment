@@ -64,7 +64,15 @@ export default function GamesIndex({ games, status, loadError }: GamesPageProps)
 
                 <div ref={statusRef}>
                     <TodayStatus status={status} timezone={auth.user.timezone} onShowVote={showVote}>
-                        {status.canAct && <SuggestGameForm key={prefill.version} canAct initialName={prefill.name} autoFocus={prefill.version > 0} />}
+                        {status.canAct && (
+                            <SuggestGameForm
+                                key={prefill.version}
+                                canAct
+                                initialName={prefill.name}
+                                autoFocus={prefill.version > 0}
+                                onAdded={() => document.getElementById('today-heading')?.focus({ preventScroll: true })}
+                            />
+                        )}
                     </TodayStatus>
                 </div>
 
